@@ -13,6 +13,10 @@
 - **i18n**: next-intl (支援 zh-tw / en)
 - **State Management**: React Context / Redux Toolkit (視需求)
 
+### 相關文件
+
+- [認證系統實作計畫](./auth_implementation_plan.md) - 雙 Token 機制詳細設計
+
 ---
 
 ## 已確認資訊
