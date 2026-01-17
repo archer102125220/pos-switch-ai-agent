@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# POS Switch AI Agent
 
-## Getting Started
+通用 POS (Point of Sale) 系統，適用於各種業態（早餐店、飲料店、零售業等）。
 
-First, run the development server:
+## 技術棧
+
+- **Frontend**: Next.js 15 + React 19 + TypeScript
+- **Package Manager**: pnpm
+- **Styling**: Tailwind CSS v4
+- **Database**: MySQL 8.0.33
+- **ORM**: Sequelize
+- **i18n**: next-intl (zh-tw / en)
+
+## 開發指令
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 安裝依賴
+pnpm install
+
+# 開發模式
 pnpm dev
-# or
-bun dev
+
+# 建置
+pnpm build
+
+# 生產模式
+pnpm start
+
+# 程式碼檢查
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 環境設定
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+複製 `.env.example` 為 `.env.local` 並設定資料庫連線資訊：
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+## 專案結構
 
-To learn more about Next.js, take a look at the following resources:
+```
+pos-switch-ai-agent/
+├── app/                  # Next.js App Router
+│   ├── [locale]/         # i18n pages
+│   └── api/              # API Routes
+├── components/           # React components
+├── db/                   # Database (Sequelize)
+│   ├── config/           # Database configuration
+│   ├── models/           # Sequelize models
+│   ├── migrations/       # Database migrations
+│   └── seeders/          # Seed data
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility functions
+├── types/                # TypeScript definitions
+├── i18n/                 # Internationalization
+└── public/               # Static files
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 功能特色
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 彈性結帳模式
 
-## Deploy on Vercel
+- **先結帳 (Pre-pay)**: 點餐後立即付款
+- **後結帳 (Post-pay)**: 先出餐，用餐完畢再結帳
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 訂單修改
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 訂單在草稿或進行中狀態可自由修改品項
+- 支援追加、刪除、修改品項數量
+
+### 權限系統
+
+| 權限代碼 | 說明 |
+|----------|------|
+| `product_management` | 品項維護 |
+| `checkout` | 結帳 |
+| `order_history` | 歷史訂單查詢 |
+| `statistics` | 統計資料閱覽 |
+
+## 文件
+
+- [實作計畫](./docs/implementation_plan.md)
+- [開發進度](./docs/task.md)
+
+## License
+
+MIT
