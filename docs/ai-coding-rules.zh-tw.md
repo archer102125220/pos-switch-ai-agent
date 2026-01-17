@@ -56,6 +56,58 @@ const element = document.getElementById('id') as unknown as CustomElement;
 - 資料獲取、訂閱、計時器使用 `useEffect`
 - `useLayoutEffect` 在瀏覽器繪製前同步執行 - 避免繁重計算
 
+### 2.3 Server Components vs Client Components (強制)
+
+**核心原則**：預設使用 Server Components，只在需要時才使用 Client Components。
+
+#### 何時使用 Server Components（預設）
+
+| 場景 | 原因 |
+|------|------|
+| 資料獲取 | 減少客戶端 bundle，更快載入 |
+| 後端資源 | 直接查詢資料庫、讀取檔案 |
+| 敏感資料 | API keys、tokens 不暴露 |
+| 靜態內容 | 無互動的 UI |
+
+#### 何時使用 Client Components（`'use client'`）
+
+| 場景 | 原因 |
+|------|------|
+| 互動功能 | onClick、onChange 等事件 |
+| Hooks | useState、useEffect、useContext |
+| 瀏覽器 API | localStorage、window |
+| 第三方客戶端套件 | 依賴 window 的 library |
+
+#### 最佳實踐
+
+1. **將 `'use client'` 下推到葉節點元件** - 不要將整個頁面標記為 client
+2. **Server 獲取，Client 渲染** - 在 Server Component 獲取資料，傳遞給 Client
+3. **使用 children 模式** - Server 可包裹 Client，Client 可透過 children 包裹 Server
+
+```tsx
+// ✅ 正確：只有互動部分是 Client Component
+// app/products/page.tsx (Server)
+async function ProductsPage() {
+  const products = await db.products.findAll();
+  return (
+    <div>
+      {products.map(p => (
+        <ProductCard key={p.id} product={p}>
+          <AddToCartButton productId={p.id} /> {/* Client */}
+        </ProductCard>
+      ))}
+    </div>
+  );
+}
+
+// components/AddToCartButton.tsx (Client)
+'use client';
+export function AddToCartButton({ productId }: Props) {
+  const [loading, setLoading] = useState(false);
+  return <button onClick={() => addToCart(productId)}>加入購物車</button>;
+}
+```
+
 ---
 
 ## 3. Tailwind CSS 規範
