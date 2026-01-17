@@ -26,7 +26,7 @@
 | Version | 8.0.33 |
 | Username | root |
 | Password | 123456789 |
-| Database | `pos_switch_ai_agent` (將新建) |
+| Database | `pos_switch_ai_agent_next` (將新建) |
 
 ### 專案名稱
 

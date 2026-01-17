@@ -6,7 +6,7 @@ const sequelize = new Sequelize({
   port: parseInt(process.env.DB_PORT || '3306', 10),
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'pos_switch_ai_agent',
+  database: process.env.DB_DATABASE || 'pos_switch_ai_agent_next',
   logging: process.env.NODE_ENV === 'development' ? console.log : false,
   pool: {
     max: 10,
