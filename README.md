@@ -1,46 +1,57 @@
 # POS Switch AI Agent
 
-通用 POS (Point of Sale) 系統，適用於各種業態（早餐店、飲料店、零售業等）。
+A universal POS (Point of Sale) system suitable for various business types (breakfast shops, beverage shops, retail, etc.).
 
-*本專案主要用於測試AI Agent的開發能力，將學生時期的專題專案以AI Agent重現，並非商業用途*
+*This project is primarily used to test AI Agent development capabilities, recreating a student-era project using AI Agent, and is not for commercial use.*
 
-## 技術棧
+**[繁體中文](./README.zh-TW.md)**
 
-- **Frontend**: Next.js 15 + React 19 + TypeScript
+## Tech Stack
+
+- **Frontend**: Next.js 16 + React 19 + TypeScript
 - **Package Manager**: pnpm
 - **Styling**: Tailwind CSS v4
 - **Database**: MySQL 8.0.33
 - **ORM**: Sequelize
 - **i18n**: next-intl (zh-tw / en)
 
-## 開發指令
+## Development Commands
 
 ```bash
-# 安裝依賴
+# Install dependencies
 pnpm install
 
-# 開發模式
+# Development mode
 pnpm dev
 
-# 建置
+# Build
 pnpm build
 
-# 生產模式
+# Production mode
 pnpm start
 
-# 程式碼檢查
+# Lint check
 pnpm lint
+
+# Database migrations
+pnpm db:migrate
+
+# Database seeders
+pnpm db:seed
+
+# Reset database (undo + migrate + seed)
+pnpm db:reset
 ```
 
-## 環境設定
+## Environment Setup
 
-複製 `.env.example` 為 `.env.local` 並設定資料庫連線資訊：
+Copy `.env.example` to `.env.local` and configure your database connection:
 
 ```bash
 cp .env.example .env.local
 ```
 
-## 專案結構
+## Project Structure
 
 ```
 pos-switch-ai-agent/
@@ -50,9 +61,9 @@ pos-switch-ai-agent/
 ├── components/           # React components
 ├── db/                   # Database (Sequelize)
 │   ├── config/           # Database configuration
-│   ├── models/           # Sequelize models
-│   ├── migrations/       # Database migrations
-│   └── seeders/          # Seed data
+│   ├── models/           # Sequelize models (TypeScript)
+│   ├── migrations/       # Database migrations (TypeScript)
+│   └── seeders/          # Seed data (TypeScript)
 ├── hooks/                # Custom React hooks
 ├── lib/                  # Utility functions
 ├── types/                # TypeScript definitions
@@ -60,31 +71,38 @@ pos-switch-ai-agent/
 └── public/               # Static files
 ```
 
-## 功能特色
+## Features
 
-### 彈性結帳模式
+### Flexible Checkout Modes
 
-- **先結帳 (Pre-pay)**: 點餐後立即付款
-- **後結帳 (Post-pay)**: 先出餐，用餐完畢再結帳
+- **Pre-pay**: Pay immediately after ordering
+- **Post-pay**: Serve first, pay after dining
 
-### 訂單修改
+### Order Modification
 
-- 訂單在草稿或進行中狀態可自由修改品項
-- 支援追加、刪除、修改品項數量
+- Orders in draft or in-progress status can be freely modified
+- Supports adding, removing, and changing item quantities
 
-### 權限系統
+### Permission System
 
-| 權限代碼 | 說明 |
-|----------|------|
-| `product_management` | 品項維護 |
-| `checkout` | 結帳 |
-| `order_history` | 歷史訂單查詢 |
-| `statistics` | 統計資料閱覽 |
+| Permission Code | Description |
+|-----------------|-------------|
+| `product_management` | Product and category CRUD |
+| `checkout` | POS checkout operations |
+| `order_history` | View order history |
+| `statistics` | View sales reports |
 
-## 文件
+### Default Credentials
 
-- [實作計畫](./docs/implementation_plan.md)
-- [開發進度](./docs/task.md)
+- **Email**: admin@pos-switch.com
+- **Password**: admin123
+
+## Documentation
+
+- [Implementation Plan](./docs/implementation_plan.md)
+- [Development Progress](./docs/task.md)
+- [AI Coding Rules (English)](./docs/ai-coding-rules.md)
+- [AI Coding Rules (繁體中文)](./docs/ai-coding-rules.zh-tw.md)
 
 ## License
 
