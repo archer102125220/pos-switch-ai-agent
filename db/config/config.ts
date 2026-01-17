@@ -1,10 +1,35 @@
-require('dotenv').config({ path: '.env.local' });
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 
 const charset = 'utf8mb4';
 const collate = 'utf8mb4_unicode_ci';
 
+interface DatabaseConfig {
+  username: string;
+  password: string | null;
+  database: string;
+  host: string;
+  port: number;
+  dialect: 'mysql';
+  seederStorage?: 'sequelize';
+  migrationStorage?: 'sequelize';
+  dialectOptions: {
+    charset: string;
+  };
+  define: {
+    charset: string;
+    collate: string;
+  };
+}
+
+interface Config {
+  development: DatabaseConfig;
+  test: DatabaseConfig;
+  production: DatabaseConfig;
+}
+
 const commonConfig = {
-  dialect: 'mysql',
+  dialect: 'mysql' as const,
   dialectOptions: {
     charset,
   },
@@ -14,7 +39,7 @@ const commonConfig = {
   },
 };
 
-module.exports = {
+const config: Config = {
   development: {
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || null,
@@ -34,13 +59,15 @@ module.exports = {
     ...commonConfig,
   },
   production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
+    username: process.env.DB_USERNAME || '',
+    password: process.env.DB_PASSWORD || null,
+    database: process.env.DB_DATABASE || '',
+    host: process.env.DB_HOST || '',
     port: parseInt(process.env.DB_PORT || '3306', 10),
     seederStorage: 'sequelize',
     migrationStorage: 'sequelize',
     ...commonConfig,
   },
 };
+
+export default config;

@@ -1,7 +1,11 @@
+require('ts-node').register({
+  project: 'db/config/tsconfig.json',
+  transpileOnly: true,
+});
 const path = require('path');
 
 module.exports = {
-  'config': path.resolve('db', 'config', 'config.js'),
+  'config': path.resolve('db', 'config', 'config.ts'),
   'models-path': path.resolve('db', 'models'),
   'seeders-path': path.resolve('db', 'seeders'),
   'migrations-path': path.resolve('db', 'migrations'),

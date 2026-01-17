@@ -36,6 +36,7 @@
     "postcss-pxtorem": "^6.1.0",
     "sequelize-cli": "^6.6.5",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5"
   }
