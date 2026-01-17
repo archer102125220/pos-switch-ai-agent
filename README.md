@@ -2,6 +2,8 @@
 
 通用 POS (Point of Sale) 系統，適用於各種業態（早餐店、飲料店、零售業等）。
 
+*本專案主要用於測試AI Agent的開發能力，將學生時期的專題專案以AI Agent重現，並非商業用途*
+
 ## 技術棧
 
 - **Frontend**: Next.js 15 + React 19 + TypeScript
