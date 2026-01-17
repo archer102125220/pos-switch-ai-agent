@@ -24,7 +24,7 @@ You MUST:
 - Use **inline type imports**: `import { useState, type ReactNode } from 'react'`
 
 ### Tailwind CSS
-- Use `cn()` utility from `@/lib/utils` for conditional classes
+- Use `classNames()` utility from `@/utils/classNames` for conditional classes
 - Follow Tailwind best practices for responsive design
 
 ### Lint Disable Comments (CRITICAL)

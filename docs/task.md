@@ -5,7 +5,7 @@
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
 - [x] 安裝基礎套件 (sequelize, mysql2, clsx, tailwind-merge, postcss-pxtorem)
-- [x] 建立 Tailwind CSS utility (`lib/utils.ts`)
+- [x] 建立 Tailwind CSS utility (`utils/classNames.ts`)
 - [x] 建立 Sequelize 資料庫設定 (`db/config/`)
 - [x] 建立環境變數設定 (`.env.local`, `.env.example`)
 - [x] 設定 i18n (next-intl with zh-tw/en)

@@ -62,10 +62,10 @@ Prioritize **React Stable APIs**, avoid experimental syntax, and use proper hook
 
 ### 3.1 Class Merge Utility
 
-Always use the `cn()` utility function from `@/lib/utils` for conditional classes:
+Always use the `classNames()` utility function from `@/utils/classNames` for conditional classes:
 
 ```tsx
-import { cn } from '@/lib/utils';
+import { classNames } from '@/utils/classNames';
 
 <button className={cn(
   'px-4 py-2 rounded-lg',

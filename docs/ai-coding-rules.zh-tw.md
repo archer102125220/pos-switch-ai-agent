@@ -62,10 +62,10 @@ const element = document.getElementById('id') as unknown as CustomElement;
 
 ### 3.1 Class 合併工具
 
-始終使用 `@/lib/utils` 中的 `cn()` 工具函數處理條件式 class：
+始終使用 `@/utils/classNames` 中的 `classNames()` 工具函數處理條件式 class：
 
 ```tsx
-import { cn } from '@/lib/utils';
+import { classNames } from '@/utils/classNames';
 
 <button className={cn(
   'px-4 py-2 rounded-lg',
