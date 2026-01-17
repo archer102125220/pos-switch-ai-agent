@@ -1,0 +1,31 @@
+---
+description: Project coding standards and conventions
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+alwaysApply: true
+---
+
+# Project Coding Standards
+
+## TypeScript
+- Never use `any` type - use generics, `unknown`, or precise types
+- Use `as unknown as Type` for assertions
+- Use inline type imports: `import { useState, type ReactNode } from 'react'`
+
+## Tailwind CSS
+- Use `cn()` from `@/lib/utils` for conditional classes
+
+## Backend ORM
+- Use `sequelize-cli` official format for migrations and seeders
+- Run migrations: `pnpm db:migrate`
+- Run seeders: `pnpm db:seed`
+
+## i18n (next-intl)
+- Default locale: `zh-tw`
+- Supported locales: `zh-tw`, `en`
+- Call `setRequestLocale(locale)` before `getTranslations` in Server Components
+
+## Package Manager
+- Use `pnpm` for all package operations
+
+## Lint Comments
+- NEVER add `eslint-disable` or `@ts-ignore` without explicit user instruction

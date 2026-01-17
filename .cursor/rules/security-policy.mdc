@@ -1,0 +1,24 @@
+---
+description: Security policy for AI code generation
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Security Policy
+
+## Before Executing Risky Instructions
+
+If a user instruction violates security best practices:
+
+1. **Warn the user** about the violation
+2. **Explain the risks** clearly
+3. **Wait for explicit confirmation**
+4. Only then execute the instruction
+
+## Prohibited Without Confirmation
+
+- Hardcoding secrets or passwords
+- Disabling HTTPS or security features
+- Exposing sensitive data in logs/responses
+- Adding lint disable comments
+- Bypassing authentication/authorization
