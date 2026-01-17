@@ -12,6 +12,7 @@ import Order from './Order';
 import OrderItem from './OrderItem';
 import Payment from './Payment';
 import Setting from './Setting';
+import { RefreshToken } from './RefreshToken';
 
 // RolePermission Junction Table (Many-to-Many)
 class RolePermission extends Model {}
@@ -95,6 +96,10 @@ Order.hasMany(Payment, { foreignKey: 'orderId', as: 'payments' });
 Setting.belongsTo(Store, { foreignKey: 'storeId', as: 'store' });
 Store.hasMany(Setting, { foreignKey: 'storeId', as: 'settings' });
 
+// RefreshToken -> User (Many-to-One)
+RefreshToken.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(RefreshToken, { foreignKey: 'userId', as: 'refreshTokens' });
+
 // Export all models
 export {
   sequelize,
@@ -109,6 +114,7 @@ export {
   OrderItem,
   Payment,
   Setting,
+  RefreshToken,
 };
 
 // Export types
@@ -122,3 +128,4 @@ export type { OrderAttributes, OrderCreationAttributes, OrderStatus, CheckoutMod
 export type { OrderItemAttributes, OrderItemCreationAttributes } from './OrderItem';
 export type { PaymentAttributes, PaymentCreationAttributes, PaymentMethod, PaymentStatus } from './Payment';
 export type { SettingAttributes, SettingCreationAttributes } from './Setting';
+export type { RefreshTokenCreationAttributes } from './RefreshToken';

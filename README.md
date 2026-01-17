@@ -65,7 +65,9 @@ pos-switch-ai-agent/
 │   ├── migrations/       # Database migrations (TypeScript)
 │   └── seeders/          # Seed data (TypeScript)
 ├── hooks/                # Custom React hooks
-├── lib/                  # Utility functions
+├── utils/                # Utility functions and modules
+│   ├── classNames.ts     # Tailwind class merge
+│   └── auth/             # Authentication utilities
 ├── types/                # TypeScript definitions
 ├── i18n/                 # Internationalization
 └── public/               # Static files

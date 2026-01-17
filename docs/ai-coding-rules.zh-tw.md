@@ -253,7 +253,9 @@ pos-switch-ai-agent/
 │   ├── migrations/       # 資料庫遷移
 │   └── seeders/          # 種子資料
 ├── hooks/                # 自訂 React hooks
-├── lib/                  # 工具函數
+├── utils/                # 工具函數與模組
+│   ├── classNames.ts     # Tailwind class merge
+│   └── auth/             # 認證工具 (JWT, cookies)
 ├── types/                # TypeScript 型別定義
 ├── i18n/                 # 國際化
 └── docs/                 # 文件

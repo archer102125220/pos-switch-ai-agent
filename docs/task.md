@@ -17,8 +17,9 @@
 
 ### Phase 2: 權限系統
 - [x] Seed 預設權限和角色 (sequelize-cli 官方格式)
-- [ ] 建立登入 API (`/api/auth/login`)
+- [/] 建立登入 API (`/api/auth/login`)
 - [ ] 建立登出 API (`/api/auth/logout`)
+- [ ] 建立 Token 刷新 API (`/api/auth/refresh`)
 - [ ] 建立權限驗證 middleware
 
 ### Phase 3: 商品 API

@@ -174,11 +174,12 @@ app/api/auth/
 └── me/
     └── route.ts          # GET: 取得當前用戶
 
-lib/
-├── auth/
-│   ├── jwt.ts            # JWT 工具函數
-│   ├── cookies.ts        # Cookie 工具函數
-│   └── middleware.ts     # 驗證 middleware
+utils/
+├── classNames.ts         # Tailwind class merge helper
+└── auth/
+    ├── jwt.ts            # JWT 工具函數
+    ├── cookies.ts        # Cookie 工具函數
+    └── index.ts          # 匯出所有 auth 工具
 
 types/
 └── auth.ts               # 認證相關型別
