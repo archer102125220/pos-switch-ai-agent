@@ -14,7 +14,7 @@ interface UserAttributes {
   updatedAt: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'storeId' | 'isActive' | 'lastLoginAt' | 'createdAt' | 'updatedAt'> {}
+type UserCreationAttributes = Optional<UserAttributes, 'id' | 'storeId' | 'isActive' | 'lastLoginAt' | 'createdAt' | 'updatedAt'>;
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;

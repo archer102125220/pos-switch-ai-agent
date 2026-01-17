@@ -10,7 +10,7 @@ interface SettingAttributes {
   updatedAt: Date;
 }
 
-interface SettingCreationAttributes extends Optional<SettingAttributes, 'id' | 'storeId' | 'createdAt' | 'updatedAt'> {}
+type SettingCreationAttributes = Optional<SettingAttributes, 'id' | 'storeId' | 'createdAt' | 'updatedAt'>;
 
 class Setting extends Model<SettingAttributes, SettingCreationAttributes> implements SettingAttributes {
   public id!: number;

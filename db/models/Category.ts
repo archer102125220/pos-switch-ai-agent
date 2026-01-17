@@ -11,7 +11,7 @@ interface CategoryAttributes {
   updatedAt: Date;
 }
 
-interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id' | 'description' | 'sortOrder' | 'isActive' | 'createdAt' | 'updatedAt'> {}
+type CategoryCreationAttributes = Optional<CategoryAttributes, 'id' | 'description' | 'sortOrder' | 'isActive' | 'createdAt' | 'updatedAt'>;
 
 class Category extends Model<CategoryAttributes, CategoryCreationAttributes> implements CategoryAttributes {
   public id!: number;

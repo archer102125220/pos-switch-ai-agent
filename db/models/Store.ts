@@ -12,7 +12,7 @@ interface StoreAttributes {
   updatedAt: Date;
 }
 
-interface StoreCreationAttributes extends Optional<StoreAttributes, 'id' | 'address' | 'phone' | 'taxId' | 'isActive' | 'createdAt' | 'updatedAt'> {}
+type StoreCreationAttributes = Optional<StoreAttributes, 'id' | 'address' | 'phone' | 'taxId' | 'isActive' | 'createdAt' | 'updatedAt'>;
 
 class Store extends Model<StoreAttributes, StoreCreationAttributes> implements StoreAttributes {
   public id!: number;

@@ -10,7 +10,7 @@ interface PermissionAttributes {
   updatedAt: Date;
 }
 
-interface PermissionCreationAttributes extends Optional<PermissionAttributes, 'id' | 'description' | 'createdAt' | 'updatedAt'> {}
+type PermissionCreationAttributes = Optional<PermissionAttributes, 'id' | 'description' | 'createdAt' | 'updatedAt'>;
 
 class Permission extends Model<PermissionAttributes, PermissionCreationAttributes> implements PermissionAttributes {
   public id!: number;

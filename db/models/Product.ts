@@ -18,7 +18,7 @@ interface ProductAttributes {
   updatedAt: Date;
 }
 
-interface ProductCreationAttributes extends Optional<ProductAttributes, 'id' | 'description' | 'sku' | 'barcode' | 'imageUrl' | 'stock' | 'trackStock' | 'isActive' | 'sortOrder' | 'createdAt' | 'updatedAt'> {}
+type ProductCreationAttributes = Optional<ProductAttributes, 'id' | 'description' | 'sku' | 'barcode' | 'imageUrl' | 'stock' | 'trackStock' | 'isActive' | 'sortOrder' | 'createdAt' | 'updatedAt'>;
 
 class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
   public id!: number;

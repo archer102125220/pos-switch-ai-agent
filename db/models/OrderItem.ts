@@ -14,7 +14,7 @@ interface OrderItemAttributes {
   updatedAt: Date;
 }
 
-interface OrderItemCreationAttributes extends Optional<OrderItemAttributes, 'id' | 'notes' | 'createdAt' | 'updatedAt'> {}
+type OrderItemCreationAttributes = Optional<OrderItemAttributes, 'id' | 'notes' | 'createdAt' | 'updatedAt'>;
 
 class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes> implements OrderItemAttributes {
   public id!: number;

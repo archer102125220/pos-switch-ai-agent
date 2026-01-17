@@ -10,7 +10,7 @@ interface RoleAttributes {
   updatedAt: Date;
 }
 
-interface RoleCreationAttributes extends Optional<RoleAttributes, 'id' | 'description' | 'isActive' | 'createdAt' | 'updatedAt'> {}
+type RoleCreationAttributes = Optional<RoleAttributes, 'id' | 'description' | 'isActive' | 'createdAt' | 'updatedAt'>;
 
 class Role extends Model<RoleAttributes, RoleCreationAttributes> implements RoleAttributes {
   public id!: number;

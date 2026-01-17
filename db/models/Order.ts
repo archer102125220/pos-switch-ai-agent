@@ -21,7 +21,7 @@ interface OrderAttributes {
   updatedAt: Date;
 }
 
-interface OrderCreationAttributes extends Optional<OrderAttributes, 'id' | 'storeId' | 'userId' | 'tableNumber' | 'tax' | 'discount' | 'status' | 'checkoutMode' | 'notes' | 'createdAt' | 'updatedAt'> {}
+type OrderCreationAttributes = Optional<OrderAttributes, 'id' | 'storeId' | 'userId' | 'tableNumber' | 'tax' | 'discount' | 'status' | 'checkoutMode' | 'notes' | 'createdAt' | 'updatedAt'>;
 
 class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
   public id!: number;
