@@ -109,24 +109,70 @@ You MUST:
 - ORM: Sequelize with MySQL
 - Database name includes framework suffix (e.g., `pos_switch_ai_agent_next`) for multi-framework experiment differentiation
 
-### 6.2 Package Manager
+### 6.2 Backend ORM Best Practices (MANDATORY)
+
+When implementing database operations, **always prioritize**:
+
+1. **Official ORM patterns** - Use the ORM package's documented approach
+2. **Community best practices** - If official docs are insufficient, follow well-established community patterns
+3. **Custom implementation** - Only write custom code if no official or community pattern exists
+
+#### Migrations
+
+- Use `sequelize-cli` for database migrations
+- Command: `npx sequelize-cli migration:generate --name <migration-name>`
+- Format: Follow Sequelize's official migration format with `up()` and `down()` methods
+- Location: `db/migrations/`
+
+```javascript
+// db/migrations/XXXXXX-create-users.js
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('users', { /* ... */ });
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('users');
+  }
+};
+```
+
+#### Seeders
+
+- Use `sequelize-cli` for database seeders
+- Command: `npx sequelize-cli seed:generate --name <seeder-name>`
+- Format: Follow Sequelize's official seeder format with `up()` and `down()` methods
+- Location: `db/seeders/`
+
+```javascript
+// db/seeders/XXXXXX-seed-permissions.js
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('permissions', [/* data */]);
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('permissions', null, {});
+  }
+};
+```
+
+### 6.3 Package Manager
 
 - Use `pnpm` for all package operations
 - Commands: `pnpm add`, `pnpm remove`, `pnpm dev`, `pnpm build`
 
-### 6.3 Internationalization (i18n)
+### 6.4 Internationalization (i18n)
 
 - Use `next-intl` for internationalization
 - Default locale: `zh-tw` (Traditional Chinese)
 - Supported locales: `zh-tw`, `en`
 
-### 6.4 API Design
+### 6.5 API Design
 
 - RESTful API design
 - Use Next.js App Router API Routes (`app/api/`)
 - Response format: JSON with consistent structure
 
-### 6.5 Permission System
+### 6.6 Permission System
 
 Four permission types:
 | Permission Code | Description |

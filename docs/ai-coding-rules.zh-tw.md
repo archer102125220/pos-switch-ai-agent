@@ -109,24 +109,70 @@ import { cn } from '@/lib/utils';
 - ORM：Sequelize 搭配 MySQL
 - 資料庫名稱包含框架後綴（如 `pos_switch_ai_agent_next`），以區分多框架實驗
 
-### 6.2 套件管理器
+### 6.2 後端 ORM 最佳實踐 (強制)
+
+實作資料庫操作時，**務必優先採用**：
+
+1. **官方 ORM 模式** - 使用 ORM 套件的官方文件做法
+2. **社群最佳實踐** - 若官方文件不足，遵循社群公認的最佳實踐
+3. **自訂實作** - 僅在沒有官方或社群模式時才自行撰寫
+
+#### Migrations (資料庫遷移)
+
+- 使用 `sequelize-cli` 管理資料庫遷移
+- 指令：`npx sequelize-cli migration:generate --name <migration-name>`
+- 格式：遵循 Sequelize 官方遷移格式，包含 `up()` 和 `down()` 方法
+- 位置：`db/migrations/`
+
+```javascript
+// db/migrations/XXXXXX-create-users.js
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('users', { /* ... */ });
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('users');
+  }
+};
+```
+
+#### Seeders (種子資料)
+
+- 使用 `sequelize-cli` 管理種子資料
+- 指令：`npx sequelize-cli seed:generate --name <seeder-name>`
+- 格式：遵循 Sequelize 官方 seeder 格式，包含 `up()` 和 `down()` 方法
+- 位置：`db/seeders/`
+
+```javascript
+// db/seeders/XXXXXX-seed-permissions.js
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('permissions', [/* data */]);
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('permissions', null, {});
+  }
+};
+```
+
+### 6.3 套件管理器
 
 - 使用 `pnpm` 進行所有套件操作
 - 指令：`pnpm add`、`pnpm remove`、`pnpm dev`、`pnpm build`
 
-### 6.3 國際化 (i18n)
+### 6.4 國際化 (i18n)
 
 - 使用 `next-intl` 進行國際化
 - 預設語言：`zh-tw`（繁體中文）
 - 支援語言：`zh-tw`、`en`
 
-### 6.4 API 設計
+### 6.5 API 設計
 
 - RESTful API 設計
 - 使用 Next.js App Router API Routes（`app/api/`）
 - 回應格式：JSON，具有一致的結構
 
-### 6.5 權限系統
+### 6.6 權限系統
 
 四種權限類型：
 | 權限代碼 | 說明 |

@@ -1,25 +1,22 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 1 - 專案初始化 ✅
+## 當前階段: Phase 2 - 權限系統
 
-### Phase 1: 專案初始化
+### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
 - [x] 安裝基礎套件 (sequelize, mysql2, clsx, tailwind-merge, postcss-pxtorem)
 - [x] 建立 Tailwind CSS utility (`lib/utils.ts`)
-- [x] 建立 Sequelize 資料庫設定 (`db/config/database.ts`)
+- [x] 建立 Sequelize 資料庫設定 (`db/config/`)
 - [x] 建立環境變數設定 (`.env.local`, `.env.example`)
 - [x] 設定 i18n (next-intl with zh-tw/en)
 - [x] 建立 proxy.ts (Next.js 16 routing)
-- [x] 建立資料庫 Models
-  - [x] Permission, Role, RolePermission
-  - [x] Store, User
-  - [x] Category, Product
-  - [x] Order, OrderItem, Payment
-  - [x] Setting
-- [ ] 建立 MySQL 資料庫並執行 sync
+- [x] 建立資料庫 Models (10 models)
+- [x] 建立 MySQL 資料庫 (`pos_switch_ai_agent_next`)
+- [x] 建立 Migrations (sequelize-cli 官方格式)
+- [x] 執行 Migrations 建立資料表
 
 ### Phase 2: 權限系統
-- [ ] Seed 預設權限和角色
+- [x] Seed 預設權限和角色 (sequelize-cli 官方格式)
 - [ ] 建立登入 API (`/api/auth/login`)
 - [ ] 建立登出 API (`/api/auth/logout`)
 - [ ] 建立權限驗證 middleware
@@ -48,11 +45,40 @@
 
 ---
 
+## 資料庫指令
+
+```bash
+# 執行所有 migrations
+pnpm db:migrate
+
+# 復原最後一個 migration
+pnpm db:migrate:undo
+
+# 執行所有 seeders
+pnpm db:seed
+
+# 復原所有 seeders
+pnpm db:seed:undo
+
+# 重置資料庫 (復原 + 重新執行 migrations + seeders)
+pnpm db:reset
+```
+
+## 預設帳號
+
+- **Email**: admin@pos-switch.com
+- **Password**: admin123
+
+---
+
 ## 更新紀錄
 
 ### 2026-01-17
 - ✅ 專案初始化完成
-- ✅ 安裝套件 (sequelize, mysql2, next-intl, postcss-pxtorem)
 - ✅ 設定 i18n (next-intl) 完成
 - ✅ 建立所有資料庫 Models 完成
 - ✅ 修正 middleware.ts → proxy.ts (Next.js 16)
+- ✅ 新增後端 ORM 最佳實踐規則到 AI coding rules
+- ✅ 重寫 migrations/seeders 使用 sequelize-cli 官方格式
+- ✅ 執行 migrations 建立資料表
+- ✅ 執行 seeders 填充預設資料
