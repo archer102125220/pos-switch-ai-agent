@@ -1,4 +1,4 @@
-import { QueryInterface, Sequelize } from 'sequelize';
+import { QueryInterface, Sequelize, Options } from 'sequelize';
 
 /**
  * Migration to ensure database charset is utf8mb4
@@ -6,17 +6,17 @@ import { QueryInterface, Sequelize } from 'sequelize';
  */
 
 export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
-  const config = queryInterface.sequelize.config;
-  const options = queryInterface.sequelize.options;
-  const database = config.database;
-  const dialect = options.dialect || config.dialect;
+  const sequelize = queryInterface.sequelize;
+  const database = sequelize.config.database;
+  // Access dialect from options - need type assertion since sequelize types don't expose it directly
+  const dialect = (sequelize as unknown as { options: Options }).options.dialect;
   
   if (dialect === 'mysql') {
     const charset = 'utf8mb4';
     const collate = 'utf8mb4_unicode_ci';
     
     // Alter database default charset
-    await queryInterface.sequelize.query(
+    await sequelize.query(
       `ALTER DATABASE \`${database}\` CHARACTER SET ${charset} COLLATE ${collate};`
     );
     
