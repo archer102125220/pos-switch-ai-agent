@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 5.5 - 資料庫架構擴充
+## 當前階段: Phase 6 - 資料庫實作
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -50,12 +50,13 @@
 - [x] 設計商品客製化 (選項群組、加購)
 - [x] 設計套餐系統 (套餐、群組、選擇)
 
-### Phase 6: 資料庫實作 (待執行)
-- [ ] 建立商品客製化 Models (OptionGroup, Option, Addon)
-- [ ] 建立套餐 Models (Combo, ComboGroup, ComboGroupItem)
-- [ ] 建立訂單客製化 Models (OrderItemOption, OrderItemAddon, OrderCombo)
-- [ ] 建立相關 Migrations
-- [ ] 更新相關 API
+### Phase 6: 資料庫實作 ✅
+- [x] 建立商品客製化 Models (OptionGroup, Option, Addon)
+- [x] 建立套餐 Models (Combo, ComboGroup, ComboGroupItem)
+- [x] 建立訂單客製化 Models (OrderItemOption, OrderItemAddon, OrderCombo)
+- [x] 建立中介表 Models (ProductOptionGroup, ProductAddon)
+- [x] 建立相關 Migrations (3 個)
+- [x] 執行 Migrations 建立資料表
 
 ### Phase 7: 管理後台
 - [ ] 商品管理頁面

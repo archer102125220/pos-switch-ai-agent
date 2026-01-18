@@ -1,14 +1,12 @@
 import { DataTypes, Model, type Optional } from 'sequelize';
 import sequelize from '../config/database';
 
-interface OrderItemAttributes {
+interface OrderComboAttributes {
   id: number;
   orderId: number;
-  productId: number;
-  productName: string;
+  comboId: number;
+  comboName: string;
   unitPrice: number;
-  optionsPrice: number;
-  addonsPrice: number;
   quantity: number;
   subtotal: number;
   notes: string | null;
@@ -16,20 +14,18 @@ interface OrderItemAttributes {
   updatedAt: Date;
 }
 
-type OrderItemCreationAttributes = Optional<
-  OrderItemAttributes,
-  'id' | 'optionsPrice' | 'addonsPrice' | 'notes' | 'createdAt' | 'updatedAt'
+type OrderComboCreationAttributes = Optional<
+  OrderComboAttributes,
+  'id' | 'quantity' | 'notes' | 'createdAt' | 'updatedAt'
 >;
 
-class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes>
-  implements OrderItemAttributes {
+class OrderCombo extends Model<OrderComboAttributes, OrderComboCreationAttributes>
+  implements OrderComboAttributes {
   declare id: number;
   declare orderId: number;
-  declare productId: number;
-  declare productName: string;
+  declare comboId: number;
+  declare comboName: string;
   declare unitPrice: number;
-  declare optionsPrice: number;
-  declare addonsPrice: number;
   declare quantity: number;
   declare subtotal: number;
   declare notes: string | null;
@@ -37,7 +33,7 @@ class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes>
   declare readonly updatedAt: Date;
 }
 
-OrderItem.init(
+OrderCombo.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -53,36 +49,24 @@ OrderItem.init(
         key: 'id',
       },
     },
-    productId: {
+    comboId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'product_id',
+      field: 'combo_id',
       references: {
-        model: 'products',
+        model: 'combos',
         key: 'id',
       },
     },
-    productName: {
+    comboName: {
       type: DataTypes.STRING(200),
       allowNull: false,
-      field: 'product_name',
+      field: 'combo_name',
     },
     unitPrice: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       field: 'unit_price',
-    },
-    optionsPrice: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: 0,
-      field: 'options_price',
-    },
-    addonsPrice: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: 0,
-      field: 'addons_price',
     },
     quantity: {
       type: DataTypes.INTEGER,
@@ -112,11 +96,11 @@ OrderItem.init(
   },
   {
     sequelize,
-    tableName: 'order_items',
+    tableName: 'order_combos',
     timestamps: true,
     underscored: true,
   }
 );
 
-export default OrderItem;
-export type { OrderItemAttributes, OrderItemCreationAttributes };
+export default OrderCombo;
+export type { OrderComboAttributes, OrderComboCreationAttributes };
