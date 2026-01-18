@@ -60,9 +60,9 @@
 
 ### Phase 7: 管理後台
 - [x] 管理後台佈局 (AdminLayout, Sidebar, Header)
-- [ ] 使用者管理頁面 (CRUD, 角色指派)
+- [x] 使用者管理頁面 (CRUD, 角色指派)
 - [ ] 角色管理頁面 (權限勾選)
-- [ ] 權限 API (Users, Roles, Permissions)
+- [x] 權限 API (Users, Roles, Permissions)
 - [ ] 商品管理頁面
 - [ ] 選項/加購管理頁面
 - [ ] 套餐管理頁面
