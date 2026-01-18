@@ -17,16 +17,16 @@ interface UserAttributes {
 type UserCreationAttributes = Optional<UserAttributes, 'id' | 'storeId' | 'isActive' | 'lastLoginAt' | 'createdAt' | 'updatedAt'>;
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: number;
-  public storeId!: number | null;
-  public roleId!: number;
-  public email!: string;
-  public passwordHash!: string;
-  public name!: string;
-  public isActive!: boolean;
-  public lastLoginAt!: Date | null;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare storeId: number | null;
+  declare roleId: number;
+  declare email: string;
+  declare passwordHash: string;
+  declare name: string;
+  declare isActive: boolean;
+  declare lastLoginAt: Date | null;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 User.init(
@@ -60,6 +60,7 @@ User.init(
     passwordHash: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      field: 'password_hash',
     },
     name: {
       type: DataTypes.STRING(100),
