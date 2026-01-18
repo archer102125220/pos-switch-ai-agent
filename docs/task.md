@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 4 - 訂單 API
+## 當前階段: Phase 5 - POS 前端
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -39,11 +39,11 @@
 - [x] 建立 Swagger UI 頁面 (`/api-docs`)
 - [x] 為所有 API 端點撰寫文件
 
-### Phase 5: POS 前端
-- [ ] UI 基礎元件
-- [ ] POS 主畫面
-- [ ] 購物車功能
-- [ ] 結帳流程
+### Phase 5: POS 前端 ✅
+- [x] UI 基礎元件 (Button, Input, Card)
+- [x] POS 主畫面 (`/pos`)
+- [x] 購物車功能
+- [x] 結帳流程
 
 ### Phase 6: 管理後台
 - [ ] 商品管理頁面

@@ -3,7 +3,7 @@ import sequelize from '../config/database';
 
 interface PermissionAttributes {
   id: number;
-  code: 'product_management' | 'checkout' | 'order_history' | 'statistics';
+  code: 'product_management' | 'checkout' | 'order_history' | 'statistics' | 'system_settings';
   name: string;
   description: string | null;
   createdAt: Date;
@@ -13,12 +13,12 @@ interface PermissionAttributes {
 type PermissionCreationAttributes = Optional<PermissionAttributes, 'id' | 'description' | 'createdAt' | 'updatedAt'>;
 
 class Permission extends Model<PermissionAttributes, PermissionCreationAttributes> implements PermissionAttributes {
-  public id!: number;
-  public code!: 'product_management' | 'checkout' | 'order_history' | 'statistics';
-  public name!: string;
-  public description!: string | null;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare code: 'product_management' | 'checkout' | 'order_history' | 'statistics' | 'system_settings';
+  declare name: string;
+  declare description: string | null;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Permission.init(
@@ -29,7 +29,7 @@ Permission.init(
       primaryKey: true,
     },
     code: {
-      type: DataTypes.ENUM('product_management', 'checkout', 'order_history', 'statistics'),
+      type: DataTypes.ENUM('product_management', 'checkout', 'order_history', 'statistics', 'system_settings'),
       allowNull: false,
       unique: true,
     },

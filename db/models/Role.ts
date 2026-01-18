@@ -13,12 +13,12 @@ interface RoleAttributes {
 type RoleCreationAttributes = Optional<RoleAttributes, 'id' | 'description' | 'isActive' | 'createdAt' | 'updatedAt'>;
 
 class Role extends Model<RoleAttributes, RoleCreationAttributes> implements RoleAttributes {
-  public id!: number;
-  public name!: string;
-  public description!: string | null;
-  public isActive!: boolean;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare name: string;
+  declare description: string | null;
+  declare isActive: boolean;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 Role.init(
