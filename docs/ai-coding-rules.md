@@ -173,7 +173,10 @@ When implementing database operations, **always prioritize**:
 
 - Use `sequelize-cli` for database migrations
 - Command: `npx sequelize-cli migration:generate --name <migration-name>`
-- Format: Follow Sequelize's official migration format with `up()` and `down()` methods
+- **IMPORTANT**: sequelize-cli generates `.js` files by default. You MUST convert them to `.ts` files:
+  1. Change file extension from `.js` to `.ts`
+  2. Add TypeScript imports and type annotations (see example below)
+- Format: Follow the TypeScript migration format with `up()` and `down()` exported functions
 - Location: `db/migrations/`
 
 > [!WARNING]
@@ -213,7 +216,8 @@ export async function down(queryInterface: QueryInterface, _Sequelize: typeof Se
 
 - Use `sequelize-cli` for database seeders
 - Command: `npx sequelize-cli seed:generate --name <seeder-name>`
-- Format: Follow Sequelize's official seeder format with `up()` and `down()` methods
+- **IMPORTANT**: sequelize-cli generates `.js` files by default. You MUST convert them to `.ts` files (same as migrations)
+- Format: Follow the TypeScript seeder format with `up()` and `down()` exported functions
 - Location: `db/seeders/`
 
 ```typescript

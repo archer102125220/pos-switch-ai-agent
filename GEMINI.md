@@ -58,6 +58,7 @@ This applies to:
 
 ### Migrations & Seeders
 - Use `sequelize-cli` for migrations and seeders
+- **IMPORTANT**: sequelize-cli generates `.js` files by default. Convert to `.ts` with proper type annotations
 - Location: `db/migrations/`, `db/seeders/`
 - Commands: `pnpm db:migrate`, `pnpm db:seed`, `pnpm db:reset`
 - **Migration Modification Policy:**

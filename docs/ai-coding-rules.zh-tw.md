@@ -173,7 +173,10 @@ import { classNames } from '@/utils/classNames';
 
 - 使用 `sequelize-cli` 管理資料庫遷移
 - 指令：`npx sequelize-cli migration:generate --name <migration-name>`
-- 格式：遵循 Sequelize 官方遷移格式，包含 `up()` 和 `down()` 方法
+- **重要**：sequelize-cli 預設生成 `.js` 檔案，你必須將其轉換為 `.ts` 檔案：
+  1. 將副檔名從 `.js` 改為 `.ts`
+  2. 加入 TypeScript imports 和型別標註（參考下方範例）
+- 格式：遵循 TypeScript 遷移格式，使用匯出的 `up()` 和 `down()` 函數
 - 位置：`db/migrations/`
 
 > [!WARNING]
@@ -213,7 +216,8 @@ export async function down(queryInterface: QueryInterface, _Sequelize: typeof Se
 
 - 使用 `sequelize-cli` 管理種子資料
 - 指令：`npx sequelize-cli seed:generate --name <seeder-name>`
-- 格式：遵循 Sequelize 官方 seeder 格式，包含 `up()` 和 `down()` 方法
+- **重要**：sequelize-cli 預設生成 `.js` 檔案，你必須將其轉換為 `.ts` 檔案（同 migrations）
+- 格式：遵循 TypeScript seeder 格式，使用匯出的 `up()` 和 `down()` 函數
 - 位置：`db/seeders/`
 
 ```typescript
