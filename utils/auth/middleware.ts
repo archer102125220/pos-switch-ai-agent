@@ -8,6 +8,16 @@ import {
 import type { AccessTokenPayload, AuthUser } from '@/types/auth';
 
 /**
+ * Authentication Middleware for API Routes
+ * 
+ * NOTE: This file (`utils/auth/middleware.ts`) is an AUTH middleware for API route protection.
+ * It is NOT the Next.js routing middleware.
+ * 
+ * In Next.js 16, the routing middleware file is `proxy.ts` (not `middleware.ts`).
+ * See: https://nextjs.org/docs/app/building-your-application/routing/middleware
+ */
+
+/**
  * Auth middleware options
  */
 export interface AuthMiddlewareOptions {
