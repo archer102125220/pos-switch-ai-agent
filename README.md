@@ -103,6 +103,8 @@ pos-switch-ai-agent/
 
 - [Implementation Plan](./docs/implementation_plan.md)
 - [Development Progress](./docs/task.md)
+- [Database Schema (DBML)](./docs/database-schema.dbml) - Import to [dbdiagram.io](https://dbdiagram.io)
+- [API Documentation](http://localhost:3000/zh-tw/api-docs) - Swagger UI
 - [AI Coding Rules (English)](./docs/ai-coding-rules.md)
 - [AI Coding Rules (繁體中文)](./docs/ai-coding-rules.zh-tw.md)
 

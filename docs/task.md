@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 5 - POS 前端
+## 當前階段: Phase 5.5 - 資料庫架構擴充
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -45,11 +45,43 @@
 - [x] 購物車功能
 - [x] 結帳流程
 
-### Phase 6: 管理後台
+### Phase 5.5: 資料庫架構擴充 ✅
+- [x] 建立 DBML Schema ([database-schema.dbml](./database-schema.dbml))
+- [x] 設計商品客製化 (選項群組、加購)
+- [x] 設計套餐系統 (套餐、群組、選擇)
+
+### Phase 6: 資料庫實作 (待執行)
+- [ ] 建立商品客製化 Models (OptionGroup, Option, Addon)
+- [ ] 建立套餐 Models (Combo, ComboGroup, ComboGroupItem)
+- [ ] 建立訂單客製化 Models (OrderItemOption, OrderItemAddon, OrderCombo)
+- [ ] 建立相關 Migrations
+- [ ] 更新相關 API
+
+### Phase 7: 管理後台
 - [ ] 商品管理頁面
+- [ ] 選項/加購管理頁面
+- [ ] 套餐管理頁面
 - [ ] 訂單查詢頁面
 - [ ] 報表功能
 - [ ] 系統設定頁面
+
+---
+
+## 資料庫文件
+
+- **DBML Schema**: [docs/database-schema.dbml](./database-schema.dbml) (可匯入 [dbdiagram.io](https://dbdiagram.io))
+
+### 資料表統計
+
+| 分類 | 資料表數量 | 說明 |
+|------|-----------|------|
+| 權限系統 | 3 | permissions, roles, role_permissions |
+| 店家/使用者 | 3 | stores, users, refresh_tokens |
+| 商品系統 | 7 | categories, products, option_groups, options, addons, product_option_groups, product_addons |
+| 套餐系統 | 3 | combos, combo_groups, combo_group_items |
+| 訂單系統 | 6 | orders, order_items, order_item_options, order_item_addons, order_combos, order_combo_selections |
+| 其他 | 2 | payments, settings |
+| **總計** | **24** | |
 
 ---
 
@@ -80,6 +112,13 @@ pnpm db:reset
 ---
 
 ## 更新紀錄
+
+### 2026-01-18
+- ✅ 完成 Phase 5: POS 前端 (產品網格、購物車、結帳)
+- ✅ 完成 Phase 5.5: 資料庫架構擴充設計
+- ✅ 新增商品客製化設計 (選項群組、加購)
+- ✅ 新增套餐系統設計
+- ✅ 建立 DBML Schema 文件
 
 ### 2026-01-17
 - ✅ 專案初始化完成

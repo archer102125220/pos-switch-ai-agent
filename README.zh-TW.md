@@ -89,6 +89,8 @@ pos-switch-ai-agent/
 
 - [實作計畫](./docs/implementation_plan.md)
 - [開發進度](./docs/task.md)
+- [資料庫 Schema (DBML)](./docs/database-schema.dbml) - 匯入至 [dbdiagram.io](https://dbdiagram.io)
+- [API 文件](http://localhost:3000/zh-tw/api-docs) - Swagger UI
 
 ## License
 
