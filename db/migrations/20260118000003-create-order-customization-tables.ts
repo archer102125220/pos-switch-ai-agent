@@ -11,14 +11,12 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     defaultValue: 0,
-    after: 'unit_price',
   });
 
   await queryInterface.addColumn('order_items', 'addons_price', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     defaultValue: 0,
-    after: 'options_price',
   });
 
   // 2. Create order_item_options table

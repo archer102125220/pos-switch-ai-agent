@@ -176,6 +176,17 @@ When implementing database operations, **always prioritize**:
 - Format: Follow Sequelize's official migration format with `up()` and `down()` methods
 - Location: `db/migrations/`
 
+> [!WARNING]
+> **Database Modification Confirmation (CRITICAL)**
+> 
+> Before ANY database schema change (migrations, model changes, table alterations), you MUST:
+> 1. **Ask the developer**: "Is this project deployed to production?"
+> 2. **Based on the answer**:
+>    - **Not deployed**: May modify existing migrations, then use `db:reset`
+>    - **Deployed**: NEVER modify existing migrations; always create NEW migration files
+>
+> This applies to: creating tables, adding/removing columns, changing types, adding indexes, etc.
+
 > [!IMPORTANT]
 > **Migration Modification Policy**
 > - **Early Development (Pre-production)**: May modify existing migrations directly, then run `db:reset`

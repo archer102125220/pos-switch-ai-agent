@@ -176,6 +176,17 @@ import { classNames } from '@/utils/classNames';
 - 格式：遵循 Sequelize 官方遷移格式，包含 `up()` 和 `down()` 方法
 - 位置：`db/migrations/`
 
+> [!WARNING]
+> **資料庫修改確認 (關鍵)**
+> 
+> 在進行任何資料庫結構變更（migrations、model 變更、資料表修改）之前，你必須：
+> 1. **詢問開發者**：「專案是否已部署上線？」
+> 2. **根據回答**：
+>    - **未部署**：可修改現有 migration，然後執行 `db:reset`
+>    - **已部署**：禁止修改現有 migration，必須建立新的 migration 檔案
+>
+> 適用於：建立資料表、新增/移除欄位、變更型別、新增索引等
+
 > [!IMPORTANT]
 > **Migration 修改策略**
 > - **開發階段 (尚未上線)**：可直接修改現有 migration，然後執行 `db:reset` 重建

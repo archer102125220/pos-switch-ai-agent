@@ -32,6 +32,13 @@ pnpm db:seed:undo         # Undo all seeders
 pnpm db:reset             # Undo all + migrate + seed
 ```
 
+**Database Modification Confirmation (CRITICAL):**
+Before ANY database schema change, you MUST:
+1. Ask the developer: "Is this project deployed to production?"
+2. Based on the answer:
+   - Not deployed: May modify existing migrations, then use `db:reset`
+   - Deployed: NEVER modify existing migrations; create NEW files
+
 **Migration Modification Policy:**
 - Early Development: May modify existing migrations, then `db:reset`
 - Post-production: Never modify executed migrations; create new files
