@@ -59,7 +59,7 @@
 - [x] 執行 Migrations 建立資料表
 
 ### Phase 7: 管理後台
-- [ ] 管理後台佈局 (AdminLayout, Sidebar, Header)
+- [x] 管理後台佈局 (AdminLayout, Sidebar, Header)
 - [ ] 使用者管理頁面 (CRUD, 角色指派)
 - [ ] 角色管理頁面 (權限勾選)
 - [ ] 權限 API (Users, Roles, Permissions)
