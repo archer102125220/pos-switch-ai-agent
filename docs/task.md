@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 3 - 商品 API
+## 當前階段: Phase 4 - 訂單 API
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -23,15 +23,15 @@
 - [x] 建立取得用戶 API (`/api/auth/me`)
 - [x] 建立權限驗證 middleware
 
-### Phase 3: 商品 API
-- [ ] 商品 CRUD API (`/api/products`)
-- [ ] 分類 CRUD API (`/api/categories`)
+### Phase 3: 商品 API ✅
+- [x] 商品 CRUD API (`/api/products`)
+- [x] 分類 CRUD API (`/api/categories`)
 
-### Phase 4: 訂單 API
-- [ ] 訂單 CRUD API (`/api/orders`)
-- [ ] 訂單品項修改 API
-- [ ] 付款 API (`/api/payments`)
-- [ ] 系統設定 API (`/api/settings`)
+### Phase 4: 訂單 API ✅
+- [x] 訂單 CRUD API (`/api/orders`)
+- [x] 訂單品項修改 API
+- [x] 付款 API (`/api/payments`)
+- [x] 系統設定 API (`/api/settings`)
 
 ### Phase 5: POS 前端
 - [ ] UI 基礎元件
