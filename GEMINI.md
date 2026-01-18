@@ -44,6 +44,9 @@ When implementing database operations, **always prioritize**:
 - Use `sequelize-cli` for migrations and seeders
 - Location: `db/migrations/`, `db/seeders/`
 - Commands: `pnpm db:migrate`, `pnpm db:seed`, `pnpm db:reset`
+- **Migration Modification Policy:**
+  - Early Development (Pre-production): May modify existing migrations, then `db:reset`
+  - Post-production: Never modify executed migrations; create new files
 
 ---
 

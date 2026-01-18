@@ -12,12 +12,13 @@ alwaysApply: true
 - Use inline type imports: `import { useState, type ReactNode } from 'react'`
 
 ## Tailwind CSS
-- Use `cn()` from `@/lib/utils` for conditional classes
+- Use `classNames()` from `@/utils/classNames` for conditional classes
 
 ## Backend ORM
 - Use `sequelize-cli` official format for migrations and seeders
 - Run migrations: `pnpm db:migrate`
 - Run seeders: `pnpm db:seed`
+- **Migration Policy:** Early dev = modify existing + `db:reset`; Post-prod = create new files
 
 ## i18n (next-intl)
 - Default locale: `zh-tw`

@@ -32,6 +32,10 @@ pnpm db:seed:undo         # Undo all seeders
 pnpm db:reset             # Undo all + migrate + seed
 ```
 
+**Migration Modification Policy:**
+- Early Development: May modify existing migrations, then `db:reset`
+- Post-production: Never modify executed migrations; create new files
+
 ## File Structure
 
 ```
@@ -45,7 +49,7 @@ pos-switch-ai-agent/
 │   ├── migrations/       # Database migrations
 │   └── seeders/          # Seed data
 ├── i18n/                 # Internationalization
-├── lib/                  # Utilities
+├── utils/                # Utilities and modules
 └── docs/                 # Documentation
 ```
 
