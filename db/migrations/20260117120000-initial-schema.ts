@@ -14,7 +14,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
       primaryKey: true,
     },
     code: {
-      type: DataTypes.ENUM('product_management', 'checkout', 'order_history', 'statistics'),
+      type: DataTypes.ENUM('product_management', 'checkout', 'order_history', 'statistics', 'system_settings'),
       allowNull: false,
       unique: true,
     },

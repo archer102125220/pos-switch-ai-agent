@@ -176,6 +176,12 @@ import { classNames } from '@/utils/classNames';
 - 格式：遵循 Sequelize 官方遷移格式，包含 `up()` 和 `down()` 方法
 - 位置：`db/migrations/`
 
+> [!IMPORTANT]
+> **Migration 修改策略**
+> - **開發階段 (尚未上線)**：可直接修改現有 migration，然後執行 `db:reset` 重建
+> - **上線後**：禁止修改已執行的 migration，必須建立新的 migration 檔案
+> - Seeder 同理
+
 ```javascript
 // db/migrations/XXXXXX-create-users.js
 module.exports = {

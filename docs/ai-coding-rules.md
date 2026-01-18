@@ -176,6 +176,12 @@ When implementing database operations, **always prioritize**:
 - Format: Follow Sequelize's official migration format with `up()` and `down()` methods
 - Location: `db/migrations/`
 
+> [!IMPORTANT]
+> **Migration Modification Policy**
+> - **Early Development (Pre-production)**: May modify existing migrations directly, then run `db:reset`
+> - **Post-production**: Never modify executed migrations; always create new migration files
+> - Same applies to seeders
+
 ```javascript
 // db/migrations/XXXXXX-create-users.js
 module.exports = {
