@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 2 - 權限系統
+## 當前階段: Phase 3 - 商品 API
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -15,13 +15,13 @@
 - [x] 建立 Migrations (sequelize-cli 官方格式)
 - [x] 執行 Migrations 建立資料表
 
-### Phase 2: 權限系統
+### Phase 2: 權限系統 ✅
 - [x] Seed 預設權限和角色 (sequelize-cli 官方格式)
 - [x] 建立登入 API (`/api/auth/login`)
 - [x] 建立登出 API (`/api/auth/logout`)
 - [x] 建立 Token 刷新 API (`/api/auth/refresh`)
 - [x] 建立取得用戶 API (`/api/auth/me`)
-- [ ] 建立權限驗證 middleware
+- [x] 建立權限驗證 middleware
 
 ### Phase 3: 商品 API
 - [ ] 商品 CRUD API (`/api/products`)

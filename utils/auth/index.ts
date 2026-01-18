@@ -17,3 +17,15 @@ export {
   getRefreshTokenCookie,
   clearAuthCookies,
 } from './cookies';
+
+export {
+  checkAuth,
+  hasPermissions,
+  withAuth,
+  requireAuth,
+  requirePermission,
+  requirePermissions,
+  createErrorResponse,
+  type AuthMiddlewareOptions,
+  type AuthResult,
+} from './middleware';
