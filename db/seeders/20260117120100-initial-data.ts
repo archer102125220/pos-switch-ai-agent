@@ -29,6 +29,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     { code: 'checkout', name: '結帳', description: '操作 POS 結帳功能', created_at: now, updated_at: now },
     { code: 'order_history', name: '歷史訂單查詢', description: '檢視過往訂單記錄', created_at: now, updated_at: now },
     { code: 'statistics', name: '統計資料閱覽', description: '檢視銷售報表與統計', created_at: now, updated_at: now },
+    { code: 'system_settings', name: '系統設定管理', description: '管理認證策略、系統參數等核心設定', created_at: now, updated_at: now },
   ]);
 
   // Get permission IDs
@@ -62,6 +63,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     { role_id: roleMap['Admin'], permission_id: permissionMap['checkout'] },
     { role_id: roleMap['Admin'], permission_id: permissionMap['order_history'] },
     { role_id: roleMap['Admin'], permission_id: permissionMap['statistics'] },
+    { role_id: roleMap['Admin'], permission_id: permissionMap['system_settings'] },
     // Manager: all permissions
     { role_id: roleMap['Manager'], permission_id: permissionMap['product_management'] },
     { role_id: roleMap['Manager'], permission_id: permissionMap['checkout'] },
@@ -111,11 +113,14 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
 
   // Seed Default Settings
   await queryInterface.bulkInsert('settings', [
-    { store_id: null, key: 'checkout_mode', value: JSON.stringify('pre_pay'), created_at: now, updated_at: now },
-    { store_id: null, key: 'allow_order_modification', value: JSON.stringify(true), created_at: now, updated_at: now },
-    { store_id: null, key: 'tax_rate', value: JSON.stringify(0), created_at: now, updated_at: now },
-    { store_id: null, key: 'receipt_header', value: JSON.stringify('感謝您的光臨'), created_at: now, updated_at: now },
-    { store_id: null, key: 'receipt_footer', value: JSON.stringify('歡迎再次光臨'), created_at: now, updated_at: now },
+    { store_id: null, key: 'checkout_mode', value: 'pre_pay', created_at: now, updated_at: now },
+    { store_id: null, key: 'allow_order_modification', value: 'true', created_at: now, updated_at: now },
+    { store_id: null, key: 'tax_rate', value: '0', created_at: now, updated_at: now },
+    { store_id: null, key: 'receipt_header', value: '感謝您的光臨', created_at: now, updated_at: now },
+    { store_id: null, key: 'receipt_footer', value: '歡迎再次光臨', created_at: now, updated_at: now },
+    // Auth settings
+    { store_id: null, key: 'auth_single_device_login', value: 'false', created_at: now, updated_at: now },
+    { store_id: null, key: 'auth_token_rotation', value: 'true', created_at: now, updated_at: now },
   ]);
 
   console.log('\n📌 Default credentials:');

@@ -57,7 +57,7 @@ export function createRefreshToken(userId: number, jti: string): string {
  */
 export function verifyAccessToken(token: string): AccessTokenPayload | null {
   try {
-    const decoded = jwt.verify(token, ACCESS_SECRET) as AccessTokenPayload;
+    const decoded = jwt.verify(token, ACCESS_SECRET) as unknown as AccessTokenPayload;
     if (decoded.type !== 'access') {
       return null;
     }
@@ -72,7 +72,7 @@ export function verifyAccessToken(token: string): AccessTokenPayload | null {
  */
 export function verifyRefreshToken(token: string): RefreshTokenPayload | null {
   try {
-    const decoded = jwt.verify(token, REFRESH_SECRET) as RefreshTokenPayload;
+    const decoded = jwt.verify(token, REFRESH_SECRET) as unknown as RefreshTokenPayload;
     if (decoded.type !== 'refresh') {
       return null;
     }

@@ -1,5 +1,5 @@
 import { Model, DataTypes, type InferAttributes, type InferCreationAttributes, type CreationOptional, type ForeignKey } from 'sequelize';
-import { sequelize } from '../config/database';
+import sequelize from '../config/database';
 
 export class RefreshToken extends Model<InferAttributes<RefreshToken>, InferCreationAttributes<RefreshToken>> {
   declare id: CreationOptional<number>;

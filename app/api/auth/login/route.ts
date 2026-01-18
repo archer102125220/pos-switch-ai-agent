@@ -7,7 +7,7 @@ import {
   generateJti,
   getRefreshTokenExpiryDate,
   setAuthCookies,
-} from '@/lib/auth';
+} from '@/utils/auth';
 import type { AuthUser, LoginRequest, LoginResponse } from '@/types/auth';
 
 /**
