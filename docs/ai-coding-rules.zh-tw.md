@@ -192,7 +192,10 @@ import { classNames } from '@/utils/classNames';
 
 > [!IMPORTANT]
 > **Migration 修改策略**
-> - **開發階段 (尚未上線)**：可直接修改現有 migration，然後執行 `db:reset` 重建
+> - **開發階段 (尚未上線)**：
+>   - 直接修改原始 migration，而非建立新的 `addColumn` migration
+>   - 將新欄位加入原本的 `createTable` migration
+>   - 執行 `db:reset` 套用變更
 > - **上線後**：禁止修改已執行的 migration，必須建立新的 migration 檔案
 > - Seeder 同理
 

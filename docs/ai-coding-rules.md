@@ -192,7 +192,10 @@ When implementing database operations, **always prioritize**:
 
 > [!IMPORTANT]
 > **Migration Modification Policy**
-> - **Early Development (Pre-production)**: May modify existing migrations directly, then run `db:reset`
+> - **Early Development (Pre-production)**: 
+>   - Modify original migrations directly instead of creating new `addColumn` migrations
+>   - Add new columns to the original `createTable` migration
+>   - Run `db:reset` to apply changes
 > - **Post-production**: Never modify executed migrations; always create new migration files
 > - Same applies to seeders
 

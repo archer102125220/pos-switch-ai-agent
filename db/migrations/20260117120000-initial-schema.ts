@@ -420,6 +420,16 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    options_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0,
+    },
+    addons_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0,
+    },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,

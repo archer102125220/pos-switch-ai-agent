@@ -1,25 +1,12 @@
 import { QueryInterface, Sequelize, DataTypes } from 'sequelize';
 
 /**
- * Migration to create order customization tables and add columns to order_items
+ * Migration to create order customization tables
  * (order_item_options, order_item_addons, order_combos, order_combo_selections)
  */
 
 export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
-  // 1. Add new columns to order_items for customization tracking
-  await queryInterface.addColumn('order_items', 'options_price', {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0,
-  });
-
-  await queryInterface.addColumn('order_items', 'addons_price', {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    defaultValue: 0,
-  });
-
-  // 2. Create order_item_options table
+  // 1. Create order_item_options table
   await queryInterface.createTable('order_item_options', {
     id: {
       type: DataTypes.INTEGER,
@@ -66,7 +53,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     },
   });
 
-  // 3. Create order_item_addons table
+  // 2. Create order_item_addons table
   await queryInterface.createTable('order_item_addons', {
     id: {
       type: DataTypes.INTEGER,
@@ -117,7 +104,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     },
   });
 
-  // 4. Create order_combos table
+  // 3. Create order_combos table
   await queryInterface.createTable('order_combos', {
     id: {
       type: DataTypes.INTEGER,
@@ -177,7 +164,7 @@ export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequ
     },
   });
 
-  // 5. Create order_combo_selections table
+  // 4. Create order_combo_selections table
   await queryInterface.createTable('order_combo_selections', {
     id: {
       type: DataTypes.INTEGER,
@@ -245,6 +232,4 @@ export async function down(queryInterface: QueryInterface, _Sequelize: typeof Se
   await queryInterface.dropTable('order_combos');
   await queryInterface.dropTable('order_item_addons');
   await queryInterface.dropTable('order_item_options');
-  await queryInterface.removeColumn('order_items', 'addons_price');
-  await queryInterface.removeColumn('order_items', 'options_price');
 }

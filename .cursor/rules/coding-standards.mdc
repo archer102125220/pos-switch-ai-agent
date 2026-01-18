@@ -19,7 +19,7 @@ alwaysApply: true
 - Run migrations: `pnpm db:migrate`
 - Run seeders: `pnpm db:seed`
 - **DB Modification Confirmation:** Before ANY schema change, ask "Is this project deployed to production?" → Not deployed = modify + `db:reset`; Deployed = create NEW migrations
-- **Migration Policy:** Early dev = modify existing + `db:reset`; Post-prod = create new files
+- **Migration Policy:** Early dev = modify original migrations directly (not addColumn) + `db:reset`; Post-prod = create new files
 
 ## i18n (next-intl)
 - Default locale: `zh-tw`

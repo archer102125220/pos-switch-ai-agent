@@ -40,7 +40,9 @@ Before ANY database schema change, you MUST:
    - Deployed: NEVER modify existing migrations; create NEW files
 
 **Migration Modification Policy:**
-- Early Development: May modify existing migrations, then `db:reset`
+- Early Development (Pre-production): 
+  - Modify original migrations directly (don't create addColumn migrations)
+  - Run `db:reset` to apply changes
 - Post-production: Never modify executed migrations; create new files
 
 ## File Structure

@@ -62,8 +62,11 @@ This applies to:
 - Location: `db/migrations/`, `db/seeders/`
 - Commands: `pnpm db:migrate`, `pnpm db:seed`, `pnpm db:reset`
 - **Migration Modification Policy:**
-  - Early Development (Pre-production): May modify existing migrations, then `db:reset`
-  - Post-production: Never modify executed migrations; create new files
+  - **Early Development (Pre-production)**: 
+    - Modify original migrations directly instead of creating new `addColumn` migrations
+    - Add new columns to the original `createTable` migration
+    - Run `db:reset` to apply changes
+  - **Post-production**: Never modify executed migrations; create new migration files
 
 ---
 
