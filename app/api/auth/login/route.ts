@@ -8,6 +8,7 @@ import {
   getRefreshTokenExpiryDate,
   setAuthCookies,
 } from '@/utils/auth';
+import { getPermissionsForRole } from '@/utils/auth/permissions';
 import type { AuthUser, LoginRequest, LoginResponse } from '@/types/auth';
 
 /**
@@ -60,9 +61,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Extract permissions
+    // Extract permissions (admin role always gets ALL permissions)
     const role = user.get('role') as Role & { permissions?: Permission[] };
-    const permissions = role?.permissions?.map(p => p.code) || [];
+    const rolePermissions = role?.permissions?.map(p => p.code) || [];
+    const permissions = getPermissionsForRole(role?.name || '', rolePermissions);
 
     // Check single device login setting
     const singleDeviceSetting = await Setting.findOne({

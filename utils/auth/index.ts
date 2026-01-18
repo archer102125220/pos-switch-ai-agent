@@ -29,3 +29,11 @@ export {
   type AuthMiddlewareOptions,
   type AuthResult,
 } from './middleware';
+
+export {
+  ADMIN_ROLE_NAME,
+  ALL_PERMISSIONS,
+  isAdminRole,
+  getPermissionsForRole,
+  type PermissionCode,
+} from './permissions';

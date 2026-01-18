@@ -10,6 +10,7 @@ import {
   setAuthCookies,
   setAccessTokenCookie,
 } from '@/utils/auth';
+import { getPermissionsForRole } from '@/utils/auth/permissions';
 import type { AuthUser } from '@/types/auth';
 
 /**
@@ -73,9 +74,10 @@ export async function POST() {
       );
     }
 
-    // Extract permissions
+    // Extract permissions (admin role always gets ALL permissions)
     const role = user.get('role') as Role & { permissions?: Permission[] };
-    const permissions = role?.permissions?.map(p => p.code) || [];
+    const rolePermissions = role?.permissions?.map(p => p.code) || [];
+    const permissions = getPermissionsForRole(role?.name || '', rolePermissions);
 
     // Build auth user for token payload
     const authUser: AuthUser = {

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { User, Role, Permission } from '@/db/models';
 import { getAccessTokenCookie, verifyAccessToken } from '@/utils/auth';
+import { getPermissionsForRole } from '@/utils/auth/permissions';
 
 /**
  * GET /api/auth/me
@@ -54,9 +55,10 @@ export async function GET() {
       );
     }
 
-    // Extract role and permissions
+    // Extract role and permissions (admin role always gets ALL permissions)
     const role = user.get('role') as Role & { permissions?: Permission[] };
-    const permissions = role?.permissions?.map(p => p.code) || [];
+    const rolePermissions = role?.permissions?.map(p => p.code) || [];
+    const permissions = getPermissionsForRole(role?.name || '', rolePermissions);
 
     return NextResponse.json({
       user: {

@@ -1,6 +1,6 @@
 # POS Switch AI Agent - 開發進度
 
-## 當前階段: Phase 6 - 資料庫實作
+## 當前階段: Phase 7 - 管理後台
 
 ### Phase 1: 專案初始化 ✅
 - [x] 建立 Next.js 專案 (pnpm create next-app --tailwind)
@@ -59,6 +59,10 @@
 - [x] 執行 Migrations 建立資料表
 
 ### Phase 7: 管理後台
+- [ ] 管理後台佈局 (AdminLayout, Sidebar, Header)
+- [ ] 使用者管理頁面 (CRUD, 角色指派)
+- [ ] 角色管理頁面 (權限勾選)
+- [ ] 權限 API (Users, Roles, Permissions)
 - [ ] 商品管理頁面
 - [ ] 選項/加購管理頁面
 - [ ] 套餐管理頁面
