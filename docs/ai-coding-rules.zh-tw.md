@@ -193,16 +193,20 @@ import { classNames } from '@/utils/classNames';
 > - **上線後**：禁止修改已執行的 migration，必須建立新的 migration 檔案
 > - Seeder 同理
 
-```javascript
-// db/migrations/XXXXXX-create-users.js
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', { /* ... */ });
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
-  }
-};
+```typescript
+// db/migrations/XXXXXX-create-users.ts
+import { QueryInterface, Sequelize, DataTypes } from 'sequelize';
+
+export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.createTable('users', {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    // ... 其他欄位
+  });
+}
+
+export async function down(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.dropTable('users');
+}
 ```
 
 #### Seeders (種子資料)
@@ -212,16 +216,17 @@ module.exports = {
 - 格式：遵循 Sequelize 官方 seeder 格式，包含 `up()` 和 `down()` 方法
 - 位置：`db/seeders/`
 
-```javascript
-// db/seeders/XXXXXX-seed-permissions.js
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('permissions', [/* data */]);
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('permissions', null, {});
-  }
-};
+```typescript
+// db/seeders/XXXXXX-seed-permissions.ts
+import { QueryInterface, Sequelize } from 'sequelize';
+
+export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.bulkInsert('permissions', [/* 資料 */]);
+}
+
+export async function down(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.bulkDelete('permissions', null, {});
+}
 ```
 
 ### 6.3 套件管理器

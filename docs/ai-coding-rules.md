@@ -193,16 +193,20 @@ When implementing database operations, **always prioritize**:
 > - **Post-production**: Never modify executed migrations; always create new migration files
 > - Same applies to seeders
 
-```javascript
-// db/migrations/XXXXXX-create-users.js
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', { /* ... */ });
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
-  }
-};
+```typescript
+// db/migrations/XXXXXX-create-users.ts
+import { QueryInterface, Sequelize, DataTypes } from 'sequelize';
+
+export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.createTable('users', {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    // ... other columns
+  });
+}
+
+export async function down(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.dropTable('users');
+}
 ```
 
 #### Seeders
@@ -212,16 +216,17 @@ module.exports = {
 - Format: Follow Sequelize's official seeder format with `up()` and `down()` methods
 - Location: `db/seeders/`
 
-```javascript
-// db/seeders/XXXXXX-seed-permissions.js
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('permissions', [/* data */]);
-  },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('permissions', null, {});
-  }
-};
+```typescript
+// db/seeders/XXXXXX-seed-permissions.ts
+import { QueryInterface, Sequelize } from 'sequelize';
+
+export async function up(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.bulkInsert('permissions', [/* data */]);
+}
+
+export async function down(queryInterface: QueryInterface, _Sequelize: typeof Sequelize): Promise<void> {
+  await queryInterface.bulkDelete('permissions', null, {});
+}
 ```
 
 ### 6.3 Package Manager
