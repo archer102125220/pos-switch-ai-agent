@@ -33,6 +33,12 @@
 - [x] 付款 API (`/api/payments`)
 - [x] 系統設定 API (`/api/settings`)
 
+### Phase 4.5: API 文件 (Swagger) ✅
+- [x] 安裝 Swagger 相關套件
+- [x] 建立 OpenAPI 規格
+- [x] 建立 Swagger UI 頁面 (`/api-docs`)
+- [x] 為所有 API 端點撰寫文件
+
 ### Phase 5: POS 前端
 - [ ] UI 基礎元件
 - [ ] POS 主畫面
