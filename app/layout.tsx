@@ -17,18 +17,14 @@ export const metadata: Metadata = {
   description: "Universal POS System for all business types",
 };
 
+// Font class names for use in locale layout
+export const fontVariables = `${geistSans.variable} ${geistMono.variable} antialiased`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+  // Just pass children through - [locale]/layout.tsx handles html/body
+  return children;
 }
