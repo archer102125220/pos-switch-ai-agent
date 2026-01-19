@@ -17,11 +17,15 @@ interface User {
 
 export function AdminHeader({ title }: AdminHeaderProps) {
   const router = useRouter();
+  // Use null as initial state to match server render
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Mark as mounted first to enable client-only rendering
+    setIsMounted(true);
+    
     // Fetch current user
     fetch('/api/auth/me')
       .then(res => res.json())
@@ -30,8 +34,7 @@ export function AdminHeader({ title }: AdminHeaderProps) {
           setUser(data.user);
         }
       })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      .catch(console.error);
   }, []);
 
   const handleLogout = async () => {
@@ -42,6 +45,12 @@ export function AdminHeader({ title }: AdminHeaderProps) {
       console.error('Logout error:', error);
     }
   };
+
+  // Consistent display values - use placeholder on both server and initial client render
+  const displayName = user?.name || '使用者';
+  const displayInitial = user?.name?.charAt(0) || 'U';
+  const displayRole = user?.role || '';
+  const displayEmail = user?.email || '';
 
   return (
     <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
@@ -78,16 +87,16 @@ export function AdminHeader({ title }: AdminHeaderProps) {
               {/* Avatar */}
               <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                 <span className="text-white font-medium text-sm">
-                  {isLoading ? '...' : user?.name?.charAt(0) || 'U'}
+                  {displayInitial}
                 </span>
               </div>
-              {/* User Info */}
+              {/* User Info - only show after mounted to avoid hydration issues */}
               <div className="hidden md:block text-left">
                 <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  {isLoading ? '載入中...' : user?.name || '使用者'}
+                  {isMounted && !user ? '載入中...' : displayName}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {isLoading ? '' : user?.role || ''}
+                  {displayRole}
                 </p>
               </div>
               {/* Chevron */}
@@ -115,10 +124,10 @@ export function AdminHeader({ title }: AdminHeaderProps) {
                 <div className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-xl bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10 p-1.5">
                   <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 mb-1.5">
                     <p className="text-sm font-medium text-slate-900 dark:text-white">
-                      {user?.name || '使用者'}
+                      {displayName}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {user?.email || ''}
+                      {displayEmail}
                     </p>
                   </div>
                   <Link
@@ -150,3 +159,4 @@ export function AdminHeader({ title }: AdminHeaderProps) {
     </header>
   );
 }
+
