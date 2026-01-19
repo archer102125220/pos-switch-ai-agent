@@ -45,6 +45,13 @@ Before ANY database schema change, you MUST:
   - Run `db:reset` to apply changes
 - Post-production: Never modify executed migrations; create new files
 
+**Error/Warning Suppression Policy (CRITICAL):**
+Any code that suppresses errors/warnings (suppressHydrationWarning, eslint-disable, @ts-ignore, empty catch blocks) requires:
+1. Explicit approval from human developer
+2. Clear explanation of WHY this is needed
+3. Always fix root cause first; suppression is last resort
+
+
 ## File Structure
 
 ```

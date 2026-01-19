@@ -21,6 +21,26 @@ function processData<T extends { value: unknown }>(data: T) { }
 const element = document.getElementById('id') as unknown as CustomElement;
 ```
 
+### 1.2 錯誤/警告抑制政策 (嚴格)
+
+任何**抑制、隱藏或繞過錯誤/警告**而非修復根本原因的程式碼需要：
+
+1. 人類開發者的**明確批准**
+2. **清楚說明**為何需要這樣做
+3. **記錄**相關取捨
+
+#### 需要批准的範例：
+
+| 技術 | 風險 |
+|------|------|
+| `suppressHydrationWarning` | 隱藏 SSR/CSR 不一致 |
+| `eslint-disable` / `@ts-ignore` / `@ts-expect-error` | 繞過靜態分析 |
+| 空的 `catch` 區塊 | 靜默吞掉錯誤 |
+| `as any` 型別斷言 | 破壞型別安全 |
+| Console 警告抑制 | 隱藏執行時問題 |
+
+**首選方法**：永遠先修復根本原因。抑制只能作為最後手段，且需明確批准。
+
 ---
 
 ## 2. React / Next.js 規範

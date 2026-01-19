@@ -31,3 +31,9 @@ alwaysApply: true
 
 ## Lint Comments
 - NEVER add `eslint-disable` or `@ts-ignore` without explicit user instruction
+
+## Error/Warning Suppression (CRITICAL)
+- Any code that suppresses errors (suppressHydrationWarning, eslint-disable, @ts-ignore, empty catch blocks, as any) requires:
+  1. Explicit approval from human developer
+  2. Clear explanation of WHY
+  3. Always fix root cause first

@@ -21,6 +21,26 @@ function processData<T extends { value: unknown }>(data: T) { }
 const element = document.getElementById('id') as unknown as CustomElement;
 ```
 
+### 1.2 Error/Warning Suppression Policy (CRITICAL)
+
+Any code that **suppresses, hides, or bypasses errors/warnings** instead of fixing the root cause requires:
+
+1. **Explicit approval** from the human developer before implementation
+2. **Clear explanation** of WHY this approach is needed
+3. **Documentation** of the trade-offs
+
+#### Examples that require approval:
+
+| Technique | Risk |
+|-----------|------|
+| `suppressHydrationWarning` | Hides SSR/CSR mismatch |
+| `eslint-disable` / `@ts-ignore` / `@ts-expect-error` | Bypasses static analysis |
+| Empty `catch` blocks | Swallows errors silently |
+| `as any` type assertions | Breaks type safety |
+| Console warnings suppression | Hides runtime issues |
+
+**Preferred approach**: Always fix the root cause first. Only use suppression as a last resort with explicit approval.
+
 ---
 
 ## 2. React / Next.js Standards
