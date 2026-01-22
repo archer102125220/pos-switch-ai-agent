@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Setting } from '@/db/models';
-import { withAuth, requirePermission } from '@/utils/auth';
-import type { AuthUser } from '@/types/auth';
+import { NextRequest, NextResponse } from "next/server";
+import { Setting } from "@/db/models";
+import { withAuth, requirePermission } from "@/utils/auth";
+import type { AuthUser } from "@/types/auth";
+import { Op } from "sequelize";
 
 /**
  * GET /api/settings
@@ -9,12 +10,14 @@ import type { AuthUser } from '@/types/auth';
  */
 export async function GET(request: NextRequest) {
   try {
+    console.log("\n=== Settings GET API Called ===");
     const { searchParams } = new URL(request.url);
-    const storeId = searchParams.get('storeId');
-    const key = searchParams.get('key');
+    const storeId = searchParams.get("storeId");
+    const key = searchParams.get("key");
+    console.log("Query params:", { storeId, key });
 
     const where: Record<string, unknown> = {};
-    
+
     if (storeId) {
       where.storeId = parseInt(storeId, 10);
     } else {
@@ -25,21 +28,31 @@ export async function GET(request: NextRequest) {
       where.key = key;
     }
 
+    console.log("WHERE clause:", JSON.stringify(where, null, 2));
+
     const settings = await Setting.findAll({ where });
+    console.log({ settings });
+    console.log(`Sequelize returned ${settings.length} settings`);
 
     // Convert to key-value object
     const settingsObject: Record<string, string> = {};
-    settings.forEach(s => {
-      settingsObject[s.key] = s.value;
+    settings.forEach((s) => {
+      const key = s.get("key") as string;
+      const value = s.get("value") as string;
+      console.log(`Processing setting: ${key} = ${value}`);
+      settingsObject[key] = value;
     });
+
+    console.log(
+      "Final settingsObject:",
+      JSON.stringify(settingsObject, null, 2),
+    );
+    console.log("=== End Settings GET ===\n");
 
     return NextResponse.json({ settings: settingsObject });
   } catch (error) {
-    console.error('Get settings error:', error);
-    return NextResponse.json(
-      { error: '取得設定時發生錯誤' },
-      { status: 500 }
-    );
+    console.error("Get settings error:", error);
+    return NextResponse.json({ error: "取得設定時發生錯誤" }, { status: 500 });
   }
 }
 
@@ -50,17 +63,17 @@ export async function GET(request: NextRequest) {
 export const PUT = withAuth(
   async (request: NextRequest, { user }: { user: AuthUser }) => {
     // Check permission for system settings
-    const permError = requirePermission(user, 'system_settings');
+    const permError = requirePermission(user, "system_settings");
     if (permError) return permError;
 
     try {
       const body = await request.json();
       const { settings, storeId } = body;
 
-      if (!settings || typeof settings !== 'object') {
+      if (!settings || typeof settings !== "object") {
         return NextResponse.json(
-          { error: '設定必須是一個物件' },
-          { status: 400 }
+          { error: "設定必須是一個物件" },
+          { status: 400 },
         );
       }
 
@@ -68,14 +81,18 @@ export const PUT = withAuth(
 
       // Update each setting
       for (const [key, value] of Object.entries(settings)) {
-        console.log(`Attempting to save setting: ${key} = ${value}, storeId = ${targetStoreId}`);
-        
+        console.log(
+          `Attempting to save setting: ${key} = ${value}, storeId = ${targetStoreId}`,
+        );
+
         const [setting, created] = await Setting.findOrCreate({
           where: { key, storeId: targetStoreId },
           defaults: { key, value: String(value), storeId: targetStoreId },
         });
 
-        console.log(`Setting ${key}: ${created ? 'created' : 'found'}, id=${setting.id}`);
+        console.log(
+          `Setting ${key}: ${created ? "created" : "found"}, id=${setting.id}`,
+        );
 
         if (!created) {
           await setting.update({ value: String(value) });
@@ -85,17 +102,20 @@ export const PUT = withAuth(
 
       // Verify saved data
       const savedSettings = await Setting.findAll({
-        where: { storeId: targetStoreId }
+        where: { storeId: targetStoreId },
       });
-      console.log(`Total settings in DB for storeId=${targetStoreId}:`, savedSettings.length);
+      console.log(
+        `Total settings in DB for storeId=${targetStoreId}:`,
+        savedSettings.length,
+      );
 
-      return NextResponse.json({ message: '設定已更新' });
+      return NextResponse.json({ message: "設定已更新" });
     } catch (error) {
-      console.error('Update settings error:', error);
+      console.error("Update settings error:", error);
       return NextResponse.json(
-        { error: '更新設定時發生錯誤' },
-        { status: 500 }
+        { error: "更新設定時發生錯誤" },
+        { status: 500 },
       );
     }
-  }
+  },
 );

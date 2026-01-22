@@ -31,6 +31,7 @@ Setting.init(
     storeId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      field: 'store_id', // Explicit mapping for underscored
       references: {
         model: 'stores',
         key: 'id',
@@ -39,19 +40,23 @@ Setting.init(
     key: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      field: 'key', // Explicit mapping (same name)
     },
     value: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'value', // Explicit mapping (same name)
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      field: 'created_at', // Explicit mapping for underscored
       defaultValue: DataTypes.NOW,
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      field: 'updated_at', // Explicit mapping for underscored
       defaultValue: DataTypes.NOW,
     },
   },
