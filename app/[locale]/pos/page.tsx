@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { ProductCard, CategoryTabs, CartPanel, type CartItem } from '@/components/pos';
 
 interface Product {
@@ -59,10 +59,12 @@ export default function POSPage() {
     fetchData();
   }, []);
 
-  // Filter products by category
-  const filteredProducts = selectedCategory
-    ? products.filter((p) => p.categoryId === selectedCategory)
-    : products;
+  // Filter products by category (memoized to avoid recalculation on every render)
+  const filteredProducts = useMemo(() => {
+    return selectedCategory
+      ? products.filter((p) => p.categoryId === selectedCategory)
+      : products;
+  }, [products, selectedCategory]);
 
   // Add product to cart
   const addToCart = useCallback((product: Product) => {

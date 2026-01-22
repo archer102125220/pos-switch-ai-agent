@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Button } from '@/components/ui';
 import { classNames } from '@/utils/classNames';
 
@@ -27,10 +28,23 @@ export function CartPanel({
   onCheckout,
   isCheckingOut = false,
 }: CartPanelProps) {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Memoize expensive calculations to prevent recalculation on every render
+  const subtotal = useMemo(
+    () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [items]
+  );
+  
   const tax = 0; // Can be configured later
-  const total = subtotal + tax;
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  
+  const total = useMemo(
+    () => subtotal + tax,
+    [subtotal, tax]
+  );
+  
+  const itemCount = useMemo(
+    () => items.reduce((sum, item) => sum + item.quantity, 0),
+    [items]
+  );
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
