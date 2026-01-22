@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Product, Category } from '@/db/models';
+import { Product, Category, OptionGroup, Option, Addon } from '@/db/models';
 import { withAuth, requirePermission } from '@/utils/auth';
 import type { AuthUser } from '@/types/auth';
 
@@ -30,6 +30,25 @@ export async function GET(request: NextRequest) {
           model: Category,
           as: 'category',
           attributes: ['id', 'name'],
+        },
+        {
+          model: OptionGroup,
+          as: 'optionGroups',
+          attributes: ['id', 'name', 'isRequired', 'multipleSelection'],
+          through: { attributes: [] }, // Exclude junction table fields
+          include: [
+            {
+              model: Option,
+              as: 'options',
+              attributes: ['id', 'name', 'priceAdjustment', 'sortOrder'],
+            },
+          ],
+        },
+        {
+          model: Addon,
+          as: 'addons',
+          attributes: ['id', 'name', 'price', 'stock', 'trackStock', 'isActive'],
+          through: { attributes: [] }, // Exclude junction table fields
         },
       ],
       order: [['sortOrder', 'ASC'], ['name', 'ASC']],

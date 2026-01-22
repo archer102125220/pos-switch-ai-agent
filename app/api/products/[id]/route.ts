@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Product, Category } from '@/db/models';
+import { Product, Category, OptionGroup, Option, Addon, ProductOptionGroup, ProductAddon } from '@/db/models';
 import { withAuth, requirePermission } from '@/utils/auth';
 import type { AuthUser } from '@/types/auth';
 
@@ -32,6 +32,25 @@ export async function GET(
           model: Category,
           as: 'category',
           attributes: ['id', 'name'],
+        },
+        {
+          model: OptionGroup,
+          as: 'optionGroups',
+          attributes: ['id', 'name', 'isRequired', 'multipleSelection'],
+          through: { attributes: [] },
+          include: [
+            {
+              model: Option,
+              as: 'options',
+              attributes: ['id', 'name', 'priceAdjustment', 'sortOrder'],
+            },
+          ],
+        },
+        {
+          model: Addon,
+          as: 'addons',
+          attributes: ['id', 'name', 'price', 'stock', 'trackStock', 'isActive'],
+          through: { attributes: [] },
         },
       ],
     });
@@ -89,7 +108,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { categoryId, name, description, price, sku, barcode, imageUrl, stock, trackStock, sortOrder, isActive } = body;
+    const { categoryId, name, description, price, sku, barcode, imageUrl, stock, trackStock, sortOrder, isActive, optionGroupIds, addonIds } = body;
 
     // Validate category if provided
     if (categoryId !== undefined) {
@@ -116,7 +135,48 @@ export async function PUT(
       ...(isActive !== undefined && { isActive }),
     });
 
-    return NextResponse.json({ product });
+    // Update option groups association if provided
+    if (Array.isArray(optionGroupIds)) {
+      await ProductOptionGroup.destroy({ where: { productId } });
+      if (optionGroupIds.length > 0) {
+        await ProductOptionGroup.bulkCreate(
+          optionGroupIds.map((ogId: number) => ({ productId, optionGroupId: ogId }))
+        );
+      }
+    }
+
+    // Update addons association if provided
+    if (Array.isArray(addonIds)) {
+      await ProductAddon.destroy({ where: { productId } });
+      if (addonIds.length > 0) {
+        await ProductAddon.bulkCreate(
+          addonIds.map((addonId: number) => ({ productId, addonId }))
+        );
+      }
+    }
+
+    // Fetch updated product with associations
+    const updatedProduct = await Product.findByPk(productId, {
+      include: [
+        {
+          model: Category,
+          as: 'category',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: OptionGroup,
+          as: 'optionGroups',
+          through: { attributes: [] },
+        },
+        {
+          model: Addon,
+          as: 'addons',
+          through: { attributes: [] },
+        },
+      ],
+    });
+
+    return NextResponse.json({ product: updatedProduct });
   } catch (error) {
     console.error('Update product error:', error);
     return NextResponse.json(
