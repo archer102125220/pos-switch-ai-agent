@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ProductCard, CategoryTabs, CartPanel, type CartItem } from '@/components/pos';
 
 interface Product {
@@ -26,8 +26,13 @@ export default function POSPage() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [nextCartItemId, setNextCartItemId] = useState(1);
 
+  const fetchedRef = useRef(false);
+
   // Fetch products and categories
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
     async function fetchData() {
       try {
         const [productsRes, categoriesRes] = await Promise.all([

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { AdminLayout } from '@/components/admin';
 import { Button, Input } from '@/components/ui';
 import { classNames } from '@/utils/classNames';
@@ -63,7 +63,12 @@ export default function RolesPage() {
     }
   }, []);
 
+  const fetchedRef = useRef(false);
+
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+    
     fetchRoles();
     fetchPermissions();
   }, [fetchRoles, fetchPermissions]);
