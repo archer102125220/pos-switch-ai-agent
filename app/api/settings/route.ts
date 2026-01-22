@@ -68,15 +68,26 @@ export const PUT = withAuth(
 
       // Update each setting
       for (const [key, value] of Object.entries(settings)) {
+        console.log(`Attempting to save setting: ${key} = ${value}, storeId = ${targetStoreId}`);
+        
         const [setting, created] = await Setting.findOrCreate({
           where: { key, storeId: targetStoreId },
           defaults: { key, value: String(value), storeId: targetStoreId },
         });
 
+        console.log(`Setting ${key}: ${created ? 'created' : 'found'}, id=${setting.id}`);
+
         if (!created) {
           await setting.update({ value: String(value) });
+          console.log(`Updated setting ${key} to ${value}`);
         }
       }
+
+      // Verify saved data
+      const savedSettings = await Setting.findAll({
+        where: { storeId: targetStoreId }
+      });
+      console.log(`Total settings in DB for storeId=${targetStoreId}:`, savedSettings.length);
 
       return NextResponse.json({ message: '設定已更新' });
     } catch (error) {
