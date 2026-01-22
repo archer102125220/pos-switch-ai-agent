@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { classNames } from '@/utils/classNames';
+import { PermissionGate } from '@/components/auth/PermissionGate';
 
 interface NavItem {
   name: string;
@@ -172,7 +173,7 @@ export function AdminSidebar() {
               const isActive = currentPath === item.href || 
                 (item.href !== '/admin' && currentPath.startsWith(item.href));
               
-              return (
+              const navItem = (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -194,6 +195,17 @@ export function AdminSidebar() {
                   </Link>
                 </li>
               );
+
+              // Wrap with PermissionGate if permission is required
+              if (item.permission) {
+                return (
+                  <PermissionGate key={item.name} permissions={[item.permission]}>
+                    {navItem}
+                  </PermissionGate>
+                );
+              }
+
+              return navItem;
             })}
           </ul>
         </nav>

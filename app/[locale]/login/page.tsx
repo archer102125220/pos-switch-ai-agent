@@ -1,44 +1,26 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { useRouter } from '@/i18n/navigation';
+import { useState } from 'react';
+import { useAuth } from '@/lib/auth/AuthContext';
 import { Button, Input } from '@/components/ui';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const { login, loading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || '登入失敗');
-        return;
-      }
-
-      // Login successful, redirect to admin
-      router.push('/admin');
-    } catch (error) {
-      console.error('Login error:', error);
-      setError('登入時發生錯誤');
-    } finally {
-      setIsLoading(false);
+      await login(email, password);
+      // AuthContext handles redirect based on permissions
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '登入失敗，請檢查您的帳號和密碼');
     }
-  }, [email, password, router]);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
@@ -95,7 +77,7 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              isLoading={isLoading}
+              isLoading={loading}
               className="w-full"
               size="lg"
             >
