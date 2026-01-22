@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Setting } from '@/db/models';
 import { withAuth, requirePermission } from '@/utils/auth';
 import type { AuthUser } from '@/types/auth';
-import { Op } from 'sequelize';
 
 /**
  * GET /api/settings
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
     if (storeId) {
       where.storeId = parseInt(storeId, 10);
     } else {
-      where.storeId = null; // Global settings
+      where.storeId = { [Op.is]: null }; // Use Op.is for NULL comparison
     }
 
     if (key) {
