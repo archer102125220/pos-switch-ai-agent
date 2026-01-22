@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useRouter } from '@/i18n/navigation';
 import { classNames } from '@/utils/classNames';
 
 export interface AdminHeaderProps {

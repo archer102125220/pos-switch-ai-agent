@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { classNames } from '@/utils/classNames';
 
 interface NavItem {
@@ -110,8 +109,8 @@ export function AdminSidebar() {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  // Remove locale prefix for comparison
-  const currentPath = pathname.replace(/^\/(zh-tw|en)/, '');
+  // pathname already lacks locale prefix when using i18n/navigation
+  const currentPath = pathname;
 
   return (
     <>
