@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { classNames } from '@/utils/classNames';
@@ -15,26 +15,31 @@ interface User {
   role: string;
 }
 
+// Use undefined to indicate "not yet loaded", null for "loaded but no user"
+type UserState = User | null | undefined;
+
 export function AdminHeader({ title }: AdminHeaderProps) {
   const router = useRouter();
-  // Use null as initial state to match server render
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserState>(undefined);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const fetchedRef = useRef(false);
 
   useEffect(() => {
-    // Mark as mounted first to enable client-only rendering
-    setIsMounted(true);
-    
-    // Fetch current user
-    fetch('/api/auth/me')
-      .then(res => res.json())
-      .then(data => {
-        if (data.user) {
-          setUser(data.user);
-        }
-      })
-      .catch(console.error);
+    // Prevent double fetch in StrictMode
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
+    // Use async IIFE to handle the fetch
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        setUser(data.user || null);
+      } catch (error) {
+        console.error('Fetch user error:', error);
+        setUser(null);
+      }
+    })();
   }, []);
 
   const handleLogout = async () => {
@@ -46,9 +51,12 @@ export function AdminHeader({ title }: AdminHeaderProps) {
     }
   };
 
-  // Consistent display values - use placeholder on both server and initial client render
-  const displayName = user?.name || '使用者';
-  const displayInitial = user?.name?.charAt(0) || 'U';
+  // Loading state: user is undefined means still loading
+  const isLoading = user === undefined;
+  
+  // Consistent display values
+  const displayName = isLoading ? '載入中...' : (user?.name || '使用者');
+  const displayInitial = isLoading ? '...' : (user?.name?.charAt(0) || 'U');
   const displayRole = user?.role || '';
   const displayEmail = user?.email || '';
 
@@ -92,8 +100,8 @@ export function AdminHeader({ title }: AdminHeaderProps) {
               </div>
               {/* User Info - only show after mounted to avoid hydration issues */}
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  {isMounted && !user ? '載入中...' : displayName}
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  {displayName}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   {displayRole}

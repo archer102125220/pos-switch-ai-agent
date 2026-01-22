@@ -45,6 +45,14 @@ Before ANY database schema change, you MUST:
   - Run `db:reset` to apply changes
 - Post-production: Never modify executed migrations; create new files
 
+**React Stable API Policy (React 19):**
+- Prioritize stable hooks: `useState`, `useEffect`, `useLayoutEffect`, `useMemo`, `useCallback`, `useRef`, `useContext`, `useReducer`, `useActionState`, `useOptimistic`, `useTransition`, `useFormStatus`, `useSyncExternalStore`
+- Use `useEffectEvent` for reactive events inside effects
+- **useLayoutEffect**: For visual sync (prevent flicker)
+- **useEffect**: For data fetching, subscriptions, timers
+- **Anti-patterns**: Avoid inline arrow functions props, missing useMemo/useCallback, useState for non-render values
+- **RTK vs useContext**: Use RTK for global state; useContext for theme/i18n/local state
+
 **Error/Warning Suppression Policy (CRITICAL):**
 Any code that suppresses errors/warnings (suppressHydrationWarning, eslint-disable, @ts-ignore, empty catch blocks) requires:
 1. Explicit approval from human developer

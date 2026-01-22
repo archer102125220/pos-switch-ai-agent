@@ -49,6 +49,8 @@ const element = document.getElementById('id') as unknown as CustomElement;
 
 優先使用 **React 穩定 API**，避免實驗性語法，並正確選擇 Hook。
 
+**React 19 穩定 Hooks**: `useState`, `useReducer`, `useContext`, `useRef`, `useImperativeHandle`, `useEffect`, `useLayoutEffect`, `useInsertionEffect`, `useEffectEvent`, `useMemo`, `useCallback`, `useTransition`, `useDeferredValue`, `useId`, `useSyncExternalStore`, `useDebugValue`, `useActionState`, `useFormStatus`, `useOptimistic`, `use`
+
 #### Hook 選擇指南
 
 | 場景 | Hook |
@@ -63,12 +65,23 @@ const element = document.getElementById('id') as unknown as CustomElement;
 | 表單 action 狀態 (React 19) | `useActionState` |
 | 樂觀更新 (React 19) | `useOptimistic` |
 | 非阻塞 UI 更新 | `useTransition` |
+| Effect 中的響應式事件 | `useEffectEvent` |
 
 #### 應避免的反模式
 
 - ❌ 不要在 JSX 中使用行內箭頭函數傳遞給 memoized 子元件 → 使用 `useCallback`
 - ❌ 不要在每次渲染時重新計算值 → 使用 `useMemo`
 - ❌ 不要對不需要觸發重新渲染的值使用 `useState` → 使用 `useRef`
+
+#### RTK vs useContext（使用 Redux Toolkit 時）
+
+| 使用 RTK | 使用 useContext |
+|----------|-----------------|
+| 全域應用程式狀態（使用者、購物車、通知） | Theme Provider (MUI ThemeContext) |
+| 跨頁面共享資料 | Locale/i18n (next-intl) |
+| 需持久化的狀態 | 局部元件樹狀態 |
+| 複雜的非同步資料 (RTK Query) | 第三方 Provider (React Query, SWR) |
+| 需要 DevTools 除錯的狀態 | 元件庫內部狀態 |
 
 ### 2.2 useLayoutEffect vs useEffect
 

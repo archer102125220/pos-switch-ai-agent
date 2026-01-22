@@ -49,6 +49,8 @@ Any code that **suppresses, hides, or bypasses errors/warnings** instead of fixi
 
 Prioritize **React Stable APIs**, avoid experimental syntax, and use proper hook selection.
 
+**React 19 Stable Hooks**: `useState`, `useReducer`, `useContext`, `useRef`, `useImperativeHandle`, `useEffect`, `useLayoutEffect`, `useInsertionEffect`, `useEffectEvent`, `useMemo`, `useCallback`, `useTransition`, `useDeferredValue`, `useId`, `useSyncExternalStore`, `useDebugValue`, `useActionState`, `useFormStatus`, `useOptimistic`, `use`
+
 #### Hook Selection Guidelines
 
 | Scenario | Hook |
@@ -63,12 +65,23 @@ Prioritize **React Stable APIs**, avoid experimental syntax, and use proper hook
 | Form action state (React 19) | `useActionState` |
 | Optimistic updates (React 19) | `useOptimistic` |
 | Non-blocking UI updates | `useTransition` |
+| Reactive events inside effects | `useEffectEvent` |
 
 #### Anti-Patterns to Avoid
 
 - ❌ DON'T use inline arrow functions in JSX when passing to memoized children → use `useCallback`
 - ❌ DON'T recalculate values on every render → use `useMemo`
 - ❌ DON'T use `useState` for values that don't need re-render → use `useRef`
+
+#### RTK vs useContext (when using Redux Toolkit)
+
+| Use RTK for | Use useContext for |
+|-------------|-------------------|
+| Global app state (user, cart, notifications) | Theme Provider (MUI ThemeContext) |
+| Cross-page shared data | Locale/i18n (next-intl) |
+| Persisted state | Local component tree state |
+| Complex async data (RTK Query) | Third-party Provider (React Query, SWR) |
+| State needing DevTools debugging | Component library internal state |
 
 ### 2.2 useLayoutEffect vs useEffect
 

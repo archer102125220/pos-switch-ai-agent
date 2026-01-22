@@ -21,6 +21,17 @@ alwaysApply: true
 - **DB Modification Confirmation:** Before ANY schema change, ask "Is this project deployed to production?" → Not deployed = modify + `db:reset`; Deployed = create NEW migrations
 - **Migration Policy:** Early dev = modify original migrations directly (not addColumn) + `db:reset`; Post-prod = create new files
 
+## React/Next.js (React 19) (CRITICAL)
+- **Stable APIs ONLY**: useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef, useContext, useReducer, useActionState, useOptimistic, useTransition, useFormStatus, useSyncExternalStore, useId, useDebugValue, useInsertionEffect
+- **Use `useEffectEvent`** for reactive events inside effects
+- **useLayoutEffect**: Visual sync (sliders, position)
+- **useEffect**: Data fetching, subscriptions, timers
+- ❌ **Anti-patterns**: 
+  - Inline arrow fn to memoized children → `useCallback`
+  - Recalculating every render → `useMemo`
+  - `useState` for non-render values → `useRef`
+- **RTK vs useContext**: RTK for global/async/persisted state; useContext for theme/i18n/local state
+
 ## i18n (next-intl)
 - Default locale: `zh-tw`
 - Supported locales: `zh-tw`, `en`
