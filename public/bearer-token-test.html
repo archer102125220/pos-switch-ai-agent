@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bearer Token Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .output {
+            margin-top: 15px;
+            padding: 15px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success { color: #4EC9B0; }
+        .error { color: #F44747; }
+        .info { color: #4FC1FF; }
+        .token-display {
+            word-break: break-all;
+            padding: 10px;
+            background: #2d2d2d;
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Bearer Token Authentication Test</h1>
+        
+        <div class="section">
+            <h2>1. Login (Bearer Token Mode)</h2>
+            <input type="email" id="email" value="admin@pos-switch.com" placeholder="Email">
+            <input type="password" id="password" value="admin123" placeholder="Password">
+            <button onclick="login()">Login with Bearer Token</button>
+            <div id="loginOutput" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>2. Get Current User</h2>
+            <button onclick="getCurrentUser()" id="getUserBtn" disabled>Get User Info</button>
+            <div id="userOutput" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>3. Refresh Token</h2>
+            <button onclick="refreshToken()" id="refreshBtn" disabled>Refresh Access Token</button>
+            <div id="refreshOutput" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>4. Logout</h2>
+            <button onclick="logout()" id="logoutBtn" disabled>Logout</button>
+            <div id="logoutOutput" class="output" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Stored Tokens</h2>
+            <div id="tokenDisplay" class="output">
+                <div><span class="info">Access Token:</span> <span id="accessTokenDisplay">Not set</span></div>
+                <div><span class="info">Refresh Token:</span> <span id="refreshTokenDisplay">Not set</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let accessToken = null;
+        let refreshToken = null;
+
+        function updateTokenDisplay() {
+            document.getElementById('accessTokenDisplay').textContent = accessToken ? accessToken.substring(0, 50) + '...' : 'Not set';
+            document.getElementById('refreshTokenDisplay').textContent = refreshToken ? refreshToken.substring(0, 50) + '...' : 'Not set';
+            
+            // Enable/disable buttons
+            const hasTokens = accessToken && refreshToken;
+            document.getElementById('getUserBtn').disabled = !accessToken;
+            document.getElementById('refreshBtn').disabled = !refreshToken;
+            document.getElementById('logoutBtn').disabled = !refreshToken;
+        }
+
+        function log(output, message, type = 'info') {
+            const div = document.getElementById(output);
+            div.style.display = 'block';
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            div.innerHTML += `<div class="${className}">${message}</div>`;
+        }
+
+        function clearOutput(output) {
+            document.getElementById(output).innerHTML = '';
+        }
+
+        async function login() {
+            clearOutput('loginOutput');
+            log('loginOutput', '🔄 Sending login request...', 'info');
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer dummy' // Trigger Bearer Token mode
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    accessToken = data.accessToken;
+                    refreshToken = data.refreshToken;
+                    updateTokenDisplay();
+
+                    log('loginOutput', '✅ Login successful!', 'success');
+                    log('loginOutput', JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('loginOutput', '❌ Login failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                log('loginOutput', '❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function getCurrentUser() {
+            clearOutput('userOutput');
+            log('userOutput', '🔄 Fetching user info...', 'info');
+
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    log('userOutput', '✅ User info retrieved!', 'success');
+                    log('userOutput', JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('userOutput', '❌ Failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                log('userOutput', '❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function refreshToken() {
+            clearOutput('refreshOutput');
+            log('refreshOutput', '🔄 Refreshing token...', 'info');
+
+            try {
+                const response = await fetch('/api/auth/refresh', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer dummy' // Trigger Bearer Token mode
+                    },
+                    body: JSON.stringify({ refreshToken })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    accessToken = data.accessToken;
+                    if (data.refreshToken) {
+                        refreshToken = data.refreshToken;
+                    }
+                    updateTokenDisplay();
+
+                    log('refreshOutput', '✅ Token refreshed!', 'success');
+                    log('refreshOutput', JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('refreshOutput', '❌ Failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                log('refreshOutput', '❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function logout() {
+            clearOutput('logoutOutput');
+            log('logoutOutput', '🔄 Logging out...', 'info');
+
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({ refreshToken })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    accessToken = null;
+                    refreshToken = null;
+                    updateTokenDisplay();
+
+                    log('logoutOutput', '✅ Logged out successfully!', 'success');
+                    log('logoutOutput', JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('logoutOutput', '❌ Failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                log('logoutOutput', '❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Initialize
+        updateTokenDisplay();
+    </script>
+</body>
+</html>

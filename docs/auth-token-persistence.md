@@ -615,4 +615,89 @@ VALUES ('auth_single_device_login', 'false', NULL);
 
 ---
 
+## Bearer Token 支援
+
+從 2026-01-23 開始，系統新增 **Bearer Token 認證模式**，與現有的 Cookie 模式並存，支援跨域部署與行動應用。
+
+### 認證模式選擇
+
+系統會根據請求自動偵測使用哪種模式：
+
+| 條件 | 模式 | Token 儲存位置 |
+|------|------|---------------|
+| **無** `Authorization` header | Cookie Mode (預設) | HttpOnly Cookie |
+| **有** `Authorization` header | Bearer Token Mode | Client-side Storage |
+
+### Bearer Token 模式特性
+
+**優點**:
+- ✅ 支援跨域部署（不同網域的前後端）
+- ✅ 適合行動應用（React Native、Flutter）
+- ✅ 適合第三方整合
+- ✅ 彈性部署選項
+
+**注意事項**:
+- ⚠️ Token 須由客戶端管理（localStorage/sessionStorage）
+- ⚠️ 需要實作 XSS 防護（CSP、輸入驗證）
+- ⚠️ 建議使用 HTTPS
+- ⚠️ 需實作 Token 刷新邏輯
+
+### 使用 Bearer Token Client
+
+系統提供現成的 `BearerTokenClient` 工具類別：
+
+```typescript
+import { BearerTokenClient } from '@/utils/auth/BearerTokenClient';
+
+const authClient = new BearerTokenClient();
+
+// 登入
+const user = await authClient.login(email, password);
+
+// 取得當前用戶
+const user = await authClient.getCurrentUser();
+
+// 發送認證請求（自動刷新 Token）
+const response = await authClient.request('/api/auth/me');
+
+// 手動刷新 Token
+await authClient.refreshAccessToken();
+
+// 登出
+await authClient.logout();
+```
+
+### API 端點調整
+
+所有認證 API 都已支援雙模式，詳見 [API Authentication 文檔](./api-authentication.md)
+
+**範例: Bearer Token 登入**
+```javascript
+const response = await fetch('/api/auth/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer dummy', // 觸發 Bearer 模式
+  },
+  body: JSON.stringify({ email, password }),
+});
+
+const { accessToken, refreshToken } = await response.json();
+```
+
+### 前端範例頁面
+
+系統包含完整的前端範例，展示如何使用 Bearer Token:
+
+- **HTML 測試頁**: `/bearer-token-test.html`
+- **React 範例**: `/[locale]/bearer-token-example`
+
+### 相關文檔
+
+- [API Authentication Documentation](./api-authentication.md) - 完整 API 文檔
+- [Bearer Token Test Guide](./bearer-token-test-guide.md) - 測試指南
+- [BearerTokenClient Source](./../utils/auth/BearerTokenClient.ts) - 客戶端工具源碼
+
+---
+
 **Last Updated**: 2026-01-23
