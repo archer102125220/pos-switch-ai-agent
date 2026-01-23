@@ -8,10 +8,9 @@ import {
   getRefreshTokenExpiryDate,
   setAuthCookies,
   shouldReturnTokensInJson,
-  type AuthUser,
 } from '@/utils/auth';
 import { getPermissionsForRole } from '@/utils/auth/permissions';
-import { type LoginRequest, type LoginResponse, type LoginResponseWithTokens } from '@/types/auth';
+import { type AuthUser, type LoginRequest, type LoginResponse, type LoginResponseWithTokens } from '@/types/auth';
 
 /**
  * POST /api/auth/login
