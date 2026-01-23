@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState,type ReactNode } from 'react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { classNames } from '@/utils/classNames';
 import { PermissionGate } from '@/components/auth/PermissionGate';

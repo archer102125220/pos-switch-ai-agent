@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo, type FormEvent } from 'react';
 import { AdminLayout } from '@/components/admin';
 import { Button, Input } from '@/components/ui';
 import { classNames } from '@/utils/classNames';
