@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BearerTokenClient } from '@/utils/auth/BearerTokenClient';
+import { BearerTokenClient, type AuthUser } from '@/utils/auth/BearerTokenClient';
 
 /**
  * Bearer Token Authentication Example
@@ -15,7 +15,7 @@ const authClient = new BearerTokenClient();
 export default function BearerTokenExample() {
   const [email, setEmail] = useState('admin@pos-switch.com');
   const [password, setPassword] = useState('admin123');
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,8 +27,8 @@ export default function BearerTokenExample() {
       const userData = await authClient.login(email, password);
       setUser(userData);
       setMessage('✅ 登入成功！');
-    } catch (error: any) {
-      setMessage('❌ ' + error.message);
+    } catch (error: unknown) {
+      setMessage('❌ ' + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }
@@ -42,8 +42,8 @@ export default function BearerTokenExample() {
       const userData = await authClient.getCurrentUser();
       setUser(userData);
       setMessage('✅ 取得用戶資訊成功！');
-    } catch (error: any) {
-      setMessage('❌ ' + error.message);
+    } catch (error: unknown) {
+      setMessage('❌ ' + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }
@@ -56,8 +56,8 @@ export default function BearerTokenExample() {
     try {
       await authClient.refreshAccessToken();
       setMessage('✅ Token 刷新成功！');
-    } catch (error: any) {
-      setMessage('❌ ' + error.message);
+    } catch (error: unknown) {
+      setMessage('❌ ' + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }
@@ -71,8 +71,8 @@ export default function BearerTokenExample() {
       await authClient.logout();
       setUser(null);
       setMessage('✅ 登出成功！');
-    } catch (error: any) {
-      setMessage('❌ ' + error.message);
+    } catch (error: unknown) {
+      setMessage('❌ ' + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }
@@ -88,8 +88,8 @@ export default function BearerTokenExample() {
       const data = await response.json();
       setUser(data.user);
       setMessage('✅ API 請求成功！');
-    } catch (error: any) {
-      setMessage('❌ ' + error.message);
+    } catch (error: unknown) {
+      setMessage('❌ ' + (error instanceof Error ? error.message : String(error)));
     } finally {
       setIsLoading(false);
     }

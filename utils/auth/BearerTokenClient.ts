@@ -10,7 +10,7 @@ interface AuthTokens {
   refreshToken: string;
 }
 
-interface AuthUser {
+export interface AuthUser {
   id: number;
   email: string;
   name: string;
