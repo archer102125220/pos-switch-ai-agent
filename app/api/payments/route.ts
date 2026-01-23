@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Order, Payment } from '@/db/models';
 import { withAuth, requirePermission } from '@/utils/auth';
-import type { AuthUser } from '@/types/auth';
+import { type AuthUser } from '@/types/auth';
 
 /**
  * POST /api/payments
