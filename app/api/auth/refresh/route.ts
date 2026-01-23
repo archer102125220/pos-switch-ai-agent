@@ -10,9 +10,10 @@ import {
   setAuthCookies,
   setAccessTokenCookie,
   shouldReturnTokensInJson,
+  type AuthUser,
 } from '@/utils/auth';
 import { getPermissionsForRole } from '@/utils/auth/permissions';
-import type { AuthUser, RefreshTokenRequest, RefreshTokenResponse } from '@/types/auth';
+import { type RefreshTokenRequest, type RefreshTokenResponse } from '@/types/auth';
 
 /**
  * POST /api/auth/refresh

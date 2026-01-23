@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { routing } from '@/i18n/routing';
 import { AuthProvider } from '@/lib/auth/AuthContext';
+import { type ReactNode } from 'react';
 
 // Define fonts in the layout that renders <html>/<body>
 const geistSans = Geist({
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 };
 

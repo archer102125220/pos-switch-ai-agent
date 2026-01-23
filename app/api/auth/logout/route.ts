@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { clearAuthCookies, getRefreshToken, verifyRefreshToken } from '@/utils/auth';
 import { RefreshToken } from '@/db/models';
-import type { RefreshTokenRequest } from '@/types/auth';
+import { type RefreshTokenRequest } from '@/types/auth';
 
 /**
  * POST /api/auth/logout
