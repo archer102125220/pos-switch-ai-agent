@@ -23,6 +23,13 @@
 - [x] 建立取得用戶 API (`/api/auth/me`)
 - [x] 建立權限驗證 middleware
 
+### Phase 2.5: Bearer Token 模式 ✅
+- [x] 支援 Bearer Token 認證（除 Cookie 外）
+- [x] 建立 `BearerTokenClient.ts` 前端工具
+- [x] 建立 Bearer Token 測試頁面
+- [x] API 認證文件（Bearer Token 使用指南）
+- [x] CORS 跨域切換 (`ENABLE_CORS` / `CORS_ALLOWED_ORIGINS`)
+
 ### Phase 3: 商品 API ✅
 - [x] 商品 CRUD API (`/api/products`)
 - [x] 分類 CRUD API (`/api/categories`)
@@ -69,7 +76,7 @@
 - [x] 商品管理頁面 (CRUD, 選項群組/加購指派)
 - [x] 訂單查詢頁面 (篩選、詳情檢視)
 - [x] 系統設定頁面 (店家資訊、稅金、收據、系統設定)
-- [ ] 套餐管理頁面
+- [/] 套餐管理頁面 (CRUD, 群組/品項編輯)
 - [ ] 報表功能
 
 ---
@@ -119,6 +126,13 @@ pnpm db:reset
 ---
 
 ## 更新紀錄
+
+### 2026-01-24
+- ✅ 完成 Bearer Token 認證模式
+- ✅ 新增 `BearerTokenClient.ts` 前端工具
+- ✅ 新增 CORS 跨域支援 (`ENABLE_CORS` 環境變數)
+- ✅ 新增「禁止腳本修改程式碼」規則到所有 AI 規則文件
+- 🔄 開始套餐管理頁面實作
 
 ### 2026-01-18
 - ✅ 完成 Phase 5: POS 前端 (產品網格、購物車、結帳)

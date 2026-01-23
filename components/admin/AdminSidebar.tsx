@@ -84,6 +84,16 @@ const navigation: NavItem[] = [
     permission: 'product_management',
   },
   {
+    name: '套餐管理',
+    href: '/admin/combos',
+    icon: (
+      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L12 12.75l-5.571-3m11.142 0l4.179 2.25L12 17.25l-9.75-5.25 4.179-2.25m11.142 0l4.179 2.25L12 21.75l-9.75-5.25 4.179-2.25" />
+      </svg>
+    ),
+    permission: 'product_management',
+  },
+  {
     name: '訂單查詢',
     href: '/admin/orders',
     icon: (
