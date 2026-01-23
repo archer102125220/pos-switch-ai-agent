@@ -79,6 +79,24 @@
 - [x] 套餐管理頁面 (CRUD, 群組/品項編輯)
 - [ ] 報表功能
 
+### Phase 8: UX 優化
+- [ ] 狀態持久化 (URL Query Parameters)
+  - [ ] 分頁狀態 (page, limit)
+  - [ ] 篩選條件 (filter, search)
+  - [ ] 排序狀態 (sortBy, sortOrder)
+  - [ ] Modal 開啟狀態 (edit=id)
+- [ ] 表單草稿保存 (localStorage)
+  - [ ] 編輯中的表單資料暫存
+  - [ ] 斷線/意外關閉恢復機制
+- [ ] 導航體驗優化
+  - [ ] 淺層路由 (Shallow Routing)
+  - [ ] 頁面切換不重置狀態
+  - [ ] 返回上一頁保留篩選條件
+- [ ] Loading 與 Error 狀態
+  - [ ] 骨架屏 (Skeleton Loading)
+  - [ ] 樂觀更新 (Optimistic Updates)
+  - [ ] 錯誤重試機制
+
 ---
 
 ## 資料庫文件

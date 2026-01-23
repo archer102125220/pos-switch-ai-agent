@@ -669,5 +669,26 @@ export default function POSPage() {
 6. **Phase 6: 管理後台**
    - 商品管理頁面
    - 訂單查詢頁面
-   - 報表功能
    - 系統設定頁面
+   - 使用者與角色管理
+   - 選項群組與加購管理
+
+7. **Phase 7: 套餐與報表**
+   - 套餐管理頁面 (Combo CRUD)
+   - 套餐群組編輯 (ComboGroup)
+   - 群組商品管理 (ComboGroupItem)
+   - 報表功能 (日報表、商品銷售)
+
+8. **Phase 8: UX 優化**
+   - 狀態持久化 (URL Query Parameters)
+     - 分頁、篩選、排序狀態同步到 URL
+     - 重新整理後保留狀態
+   - 表單草稿保存 (localStorage)
+     - 編輯中資料暫存
+     - 意外關閉恢復機制
+   - 導航體驗優化
+     - 淺層路由 (Shallow Routing)
+     - 返回上一頁保留篩選
+   - Loading 與 Error 狀態
+     - 骨架屏 (Skeleton Loading)
+     - 樂觀更新 (Optimistic Updates)
