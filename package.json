@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:migrate": "npx sequelize-cli db:migrate",
-    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
-    "db:seed": "npx sequelize-cli db:seed:all",
-    "db:seed:undo": "npx sequelize-cli db:seed:undo:all",
-    "db:reset": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "db:migrate": "cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:migrate",
+    "db:migrate:undo": "cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:migrate:undo",
+    "db:seed": "cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:seed:all",
+    "db:seed:undo": "cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:seed:undo:all",
+    "db:reset": "cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:seed:undo:all && cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:migrate:undo:all && cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:migrate && cross-env NODE_NO_WARNINGS=1 npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^3.0.0",
+    "cross-env": "^7.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
