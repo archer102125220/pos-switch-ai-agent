@@ -19,6 +19,13 @@ export {
 } from './cookies';
 
 export {
+  getAccessToken,
+  getRefreshToken,
+  isBearerTokenMode,
+  shouldReturnTokensInJson,
+} from './token';
+
+export {
   checkAuth,
   hasPermissions,
   withAuth,

@@ -7,13 +7,18 @@ import {
   generateJti,
   getRefreshTokenExpiryDate,
   setAuthCookies,
+  shouldReturnTokensInJson,
 } from '@/utils/auth';
 import { getPermissionsForRole } from '@/utils/auth/permissions';
-import type { AuthUser, LoginRequest, LoginResponse } from '@/types/auth';
+import type { AuthUser, LoginRequest, LoginResponse, LoginResponseWithTokens } from '@/types/auth';
 
 /**
  * POST /api/auth/login
  * Authenticate user and issue tokens
+ * 
+ * Supports two authentication modes:
+ * 1. Cookie mode (default): Sets HttpOnly cookies
+ * 2. Bearer Token mode: Returns tokens in JSON response
  */
 export async function POST(request: NextRequest) {
   try {
@@ -103,24 +108,41 @@ export async function POST(request: NextRequest) {
     const accessToken = createAccessToken(authUser);
     const refreshToken = createRefreshToken(user.id, jti);
 
-    // Set cookies
-    await setAuthCookies(accessToken, refreshToken);
-
     // Update last login time
     await user.update({ lastLoginAt: new Date() });
 
-    // Return user info
-    const response: LoginResponse = {
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: role?.name || '',
-        permissions,
-      },
-    };
+    // Determine response mode
+    const useBearerMode = shouldReturnTokensInJson(request);
 
-    return NextResponse.json(response);
+    if (useBearerMode) {
+      // Bearer Token mode: Return tokens in JSON
+      const response: LoginResponseWithTokens = {
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: role?.name || '',
+          permissions,
+        },
+        accessToken,
+        refreshToken,
+      };
+      return NextResponse.json(response);
+    } else {
+      // Cookie mode: Set HttpOnly cookies
+      await setAuthCookies(accessToken, refreshToken);
+
+      const response: LoginResponse = {
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: role?.name || '',
+          permissions,
+        },
+      };
+      return NextResponse.json(response);
+    }
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

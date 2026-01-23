@@ -1,16 +1,20 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { User, Role, Permission } from '@/db/models';
-import { getAccessTokenCookie, verifyAccessToken } from '@/utils/auth';
+import { getAccessToken, verifyAccessToken } from '@/utils/auth';
 import { getPermissionsForRole } from '@/utils/auth/permissions';
 
 /**
  * GET /api/auth/me
  * Get current authenticated user info
+ * 
+ * Supports two authentication modes:
+ * 1. Cookie mode: Reads token from HttpOnly cookie
+ * 2. Bearer Token mode: Reads token from Authorization header
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    // Get access token from cookie
-    const accessToken = await getAccessTokenCookie();
+    // Get access token from cookie or Authorization header
+    const accessToken = await getAccessToken(request);
     
     if (!accessToken) {
       return NextResponse.json(

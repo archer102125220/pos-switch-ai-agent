@@ -38,6 +38,23 @@ export interface LoginResponse {
   };
 }
 
+// Bearer Token mode: includes tokens in response
+export interface LoginResponseWithTokens extends LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+// Refresh Token request (Bearer Token mode)
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+// Refresh Token response (Bearer Token mode)
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken?: string; // Only if token rotation is enabled
+}
+
 export interface AuthUser {
   id: number;
   email: string;
