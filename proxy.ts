@@ -11,8 +11,6 @@ const ADMIN_PERMISSIONS = [
   'categories', 'addons', 'system_settings'
 ];
 
-// POS permissions
-const POS_PERMISSIONS = ['checkout', 'order_history'];
 
 /**
  * Check if CORS is enabled via environment variable
@@ -101,23 +99,6 @@ function handleCorsPreflightRequest(request: NextRequest): NextResponse | null {
     status: 204,
     headers: corsHeaders,
   });
-}
-
-/**
- * Add CORS headers to an existing response
- */
-function addCorsHeaders(response: NextResponse, request: NextRequest): NextResponse {
-  if (!isCorsEnabled()) {
-    return response;
-  }
-
-  const corsHeaders = getCorsHeaders(request);
-  
-  Object.entries(corsHeaders).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
-  
-  return response;
 }
 
 export default async function middleware(request: NextRequest) {
