@@ -1,57 +1,57 @@
-# 🚫 禁止使用腳本修改程式碼
+# No Scripts for Code Refactoring
 
-## 規則
+## Rule
 
-**絕對禁止使用任何自動化腳本 (sed, awk, powershell script, batch script等) 直接修改程式碼文件。**
+**ABSOLUTELY FORBIDDEN: Using any automated scripts (sed, awk, powershell script, batch script, etc.) to directly modify code files.**
 
-### 原因
+## Reason
 
-2026-01-23 發生嚴重事故：
-- 使用 `sed` 腳本批量替換 `React.FormEvent` → `FormEvent` 和 `React.ReactNode` → `ReactNode`
-- 腳本只改了型別，**沒有加入必要的 import 語句**
-- 導致多個文件出現編譯錯誤
-- 需要手動逐一修正所有受影響的文件
+**Incident on 2026-01-23:**
+- Used `sed` script to batch replace `React.FormEvent` → `FormEvent` and `React.ReactNode` → `ReactNode`
+- Script only changed type names, **failed to add required import statements**
+- Caused compilation errors in multiple files
+- Required manual fix of all affected files one by one
 
-### 允許的做法
+## Allowed Approaches
 
-✅ **手動使用工具逐一修改**
-- `replace_file_content` - 單一連續編輯
-- `multi_replace_file_content` - 多處非連續編輯
-- 每次修改**必須驗證 import 語句是否正確**
+✅ **Manual modification using AI tools**
+- `replace_file_content` - for single contiguous edits
+- `multi_replace_file_content` - for multiple non-contiguous edits
+- **MUST verify import statements are correct** for every change
 
-### 禁止的做法
+## Forbidden Approaches
 
-❌ **任何形式的腳本批量修改**
+❌ **Any form of script-based batch modification**
 - `sed`
-- `awk`  
+- `awk`
 - `powershell -Command`
 - `find ... -exec`
-- 任何文本處理工具的批量替換功能
+- Any text processing tool's batch replacement features
 
-### 例外情況
+## Exception Process
 
-如果**絕對必須**使用腳本：
+If script usage is **absolutely necessary**:
 
-1. **必須先取得人類開發者明確批准**
-2. 必須提供完整的腳本內容供審核
-3. 必須說明為什麼手動工具無法完成
-4. 開發者批准後才能執行
+1. **MUST obtain explicit human developer approval first**
+2. Must provide complete script content for review
+3. Must explain why manual tools cannot accomplish the task
+4. Only execute after developer approval
 
-### 處罰
+## Consequences for Violation
 
-違反此規則視為**嚴重錯誤**，必須：
-1. 立即停止所有工作
-2. 手動修正所有受影響的文件
-3. 驗證所有修改都正確無誤
-4. 在commit message中明確標註錯誤原因與修正
+Violation is considered a **CRITICAL ERROR** and requires:
+1. Immediately stop all work
+2. Manually fix all affected files
+3. Verify all modifications are correct
+4. Clearly document error cause and fix in commit message
 
-## 記住
+## Remember
 
-**腳本是盲目的，AI應該是有智慧的。**
+**Scripts are blind. AI should be intelligent.**
 
-程式碼修改需要理解上下文、import依賴、型別系統等。這些是腳本無法處理的。
+Code modification requires understanding context, import dependencies, type systems, etc. These are beyond what scripts can handle.
 
 ---
 
-**建立日期**: 2026-01-23  
-**觸發事件**: Bearer Token 型別重構事故
+**Created**: 2026-01-23  
+**Trigger Event**: Bearer Token type refactoring incident

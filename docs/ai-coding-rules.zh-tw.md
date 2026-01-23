@@ -298,7 +298,56 @@ export async function down(queryInterface: QueryInterface, _Sequelize: typeof Se
 
 ---
 
-## 7. 檔案組織
+## 8. 禁止使用腳本修改程式碼 (嚴重)
+
+**絕對禁止：使用任何自動化腳本 (sed, awk, powershell script, batch script 等) 直接修改程式碼檔案。**
+
+### 原因
+
+**2026-01-23 事故**：
+- 使用 `sed` 腳本批量替換 `React.FormEvent` → `FormEvent` 和 `React.ReactNode` → `ReactNode`
+- 腳本只改了型別名稱，**未加入必要的 import 語句**
+- 導致多個檔案出現編譯錯誤
+- 需要逐一手動修正所有受影響的檔案
+
+### 允許的做法
+
+✅ **使用 AI 工具手動修改**
+- `replace_file_content` - 單一連續編輯
+- `multi_replace_file_content` - 多處非連續編輯
+- **每次修改都必須驗證 import 語句是否正確**
+
+### 禁止的做法
+
+❌ **任何形式的腳本批量修改**
+- `sed`、`awk`、`perl`、`powershell -Command`、`find ... -exec`
+- 任何文字處理工具的批量替換功能
+
+### 例外流程
+
+若腳本使用是**絕對必要**：
+1. **必須先取得人類開發者明確批准**
+2. 必須提供完整的腳本內容供審核
+3. 必須說明為何手動工具無法完成
+4. 只有在開發者批准後才能執行
+
+### 違規後果
+
+違規視為**嚴重錯誤**，必須：
+1. 立即停止所有工作
+2. 手動修正所有受影響的檔案
+3. 驗證所有修改都正確無誤
+4. 在 commit message 中清楚記錄錯誤原因與修正
+
+### 謹記
+
+**腳本是盲目的，AI 應該是有智慧的。**
+
+程式碼修改需要理解上下文、import 依賴、型別系統等。這些是腳本無法處理的。
+
+---
+
+## 9. 檔案組織
 
 ```
 pos-switch-ai-agent/

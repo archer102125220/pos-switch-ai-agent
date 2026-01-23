@@ -1,0 +1,52 @@
+---
+description: Prohibits using automated scripts for code refactoring
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# No Scripts for Code Refactoring
+
+## Rule (CRITICAL)
+
+**ABSOLUTELY FORBIDDEN: Using automated scripts (sed, awk, powershell, batch scripts) to modify code files.**
+
+## Why
+
+- Scripts only change text without understanding context or imports
+- 2026-01-23 incident: `sed` changed `React.FormEvent` → `FormEvent` but forgot to add imports → compilation errors
+- Code modification requires understanding context, import dependencies, and type systems
+
+## Allowed Approaches
+
+✅ Use AI tools for modifications:
+- `replace_file_content` - for single contiguous edits
+- `multi_replace_file_content` - for multiple non-contiguous edits
+- **MUST verify imports are correct** after every change
+
+## Forbidden Approaches
+
+❌ Any script-based batch modification:
+- `sed`, `awk`, `perl`
+- `powershell -Command`, `powershell -File`
+- `find ... -exec`
+- Any text processing tool's batch replacement features
+
+## Exception Process
+
+If script usage is absolutely necessary:
+1. **Get explicit human approval FIRST**
+2. Show complete script for review
+3. Explain why manual tools cannot accomplish the task
+4. Only execute after developer approval
+
+## Consequences for Violation
+
+Violation is a **CRITICAL ERROR** and requires:
+1. Immediately stop all work
+2. Manually fix all affected files
+3. Verify all modifications are correct
+4. Document error cause and fix in commit message
+
+## Remember
+
+**Scripts are blind. AI should be intelligent.**
