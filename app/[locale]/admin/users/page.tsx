@@ -117,7 +117,7 @@ export default function UsersPage() {
     fetchRolesAndStores();
   }, [fetchRolesAndStores]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     setPagination(prev => ({ ...prev, page: 1 }));
     fetchUsers();
@@ -151,7 +151,7 @@ export default function UsersPage() {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormError('');
     setIsSubmitting(true);

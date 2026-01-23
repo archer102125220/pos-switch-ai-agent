@@ -8,7 +8,7 @@ import { PermissionGate } from '@/components/auth/PermissionGate';
 interface NavItem {
   name: string;
   href: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   permission?: string;
 }
 

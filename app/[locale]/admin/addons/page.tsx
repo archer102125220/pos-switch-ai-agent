@@ -75,7 +75,7 @@ export default function AddonsPage() {
     setIsModalOpen(true);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormError('');
     setIsSubmitting(true);

@@ -168,7 +168,7 @@ export default function ProductsPage() {
     }));
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormError('');
     setIsSubmitting(true);

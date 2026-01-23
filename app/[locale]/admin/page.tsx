@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { AdminLayout } from '@/components/admin';
+import { type ReactNode } from 'react';
 
 interface AdminPageProps {
   params: Promise<{ locale: string }>;
@@ -131,7 +132,7 @@ function StatCard({
   value: string;
   change: string;
   changeType: 'positive' | 'negative' | 'neutral';
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-700">
@@ -165,7 +166,7 @@ function QuickAction({
 }: {
   href: string;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) {
   return (
     <a
