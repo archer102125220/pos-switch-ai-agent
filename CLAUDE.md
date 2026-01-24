@@ -23,6 +23,14 @@ You MUST:
 - Use `as unknown as Type` for assertions, NEVER `as any`
 - Use **inline type imports**: `import { useState, type ReactNode } from 'react'`
 
+### Runtime Data Validation (Strict)
+- **String**: Use `if (str !== '')` instead of `if (str)`
+- **Number**: Use `typeof num === 'number'` or `Number.isFinite(num)` instead of `if (num)`
+- **Object**: Use `typeof obj === 'object' && obj !== null` instead of `if (obj)`
+- **Class**: Use `if (obj instanceof MyClass)` for specific instances
+- **Array**: Use `Array.isArray(arr) && arr.length > 0` instead of `if (arr)`
+- **Equality**: ALWAYS use `===` and `!==`
+
 ### Tailwind CSS
 - Use `classNames()` utility from `@/utils/classNames` for conditional classes
 - Follow Tailwind best practices for responsive design

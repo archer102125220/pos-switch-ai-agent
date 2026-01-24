@@ -21,7 +21,19 @@ function processData<T extends { value: unknown }>(data: T) { }
 const element = document.getElementById('id') as unknown as CustomElement;
 ```
 
-### 1.2 錯誤/警告抑制政策 (嚴格)
+### 1.2 執行時期資料驗證 (嚴格)
+
+為確保穩健性，請始終根據變數的初始狀態使用嚴格的型別檢查。
+
+| 型別 | 禁止使用 | 務必使用 |
+|------|----------|----------|
+| **字串** | `if (str)` | `if (str !== '')` |
+| **數字** | `if (num)` | `typeof num === 'number'`, `num !== 0`, `Number.isFinite(num)` |
+| **物件** | `if (obj)` | `typeof obj === 'object' && obj !== null`<br>`if (obj instanceof MyClass)` |
+| **陣列** | `if (arr)` | `Array.isArray(arr) && arr.length > 0` |
+| **相等性** | `==`, `!=` | `===`, `!==` |
+
+### 1.3 錯誤/警告抑制政策 (嚴格)
 
 任何**抑制、隱藏或繞過錯誤/警告**而非修復根本原因的程式碼需要：
 
