@@ -100,10 +100,10 @@ When implementing database operations, **always prioritize**:
 
 **Before ANY database schema change** (migrations, model changes, table alterations), you MUST:
 
-1. **Ask the human developer**: "專案是否已部署上線？(Is this project deployed to production?)"
+1. **Ask the human developer**: "Is this project deployed to production?"
 2. **Based on the answer**:
-   - **未部署 (Not deployed)**: May modify existing migrations, then use `db:reset`
-   - **已部署 (Deployed)**: NEVER modify existing migrations; always create NEW migration files
+   - **Not deployed**: May modify existing migrations, then use `db:reset`
+   - **Deployed**: NEVER modify existing migrations; always create NEW migration files
 
 This applies to:
 - Creating new tables
