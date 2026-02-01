@@ -2,6 +2,18 @@
 
 This document describes the coding rules and standards that AI assistants (e.g., Claude, Gemini) should follow when working on this project.
 
+## 0. AI Model Configuration Mapping
+
+The following table lists the configuration files used by different AI models in this project:
+
+| AI Model | Configuration File | Description |
+|----------|-------------------|-------------|
+| **Gemini** | `GEMINI.md` | Master project instructions for Google Gemini |
+| **Claude** | `CLAUDE.md` | Master project instructions for Anthropic Claude |
+| **Cursor** | `.cursor/rules/*.mdc` | Componentized rules for Cursor IDE |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Project instructions for GitHub Copilot |
+| **Antigravity** | `.agent/rules/*.md` | Configuration for Antigravity Agent |
+
 ## 1. TypeScript Standards
 
 ### 1.1 Type Safety (MANDATORY)
@@ -152,6 +164,13 @@ export function AddToCartButton({ productId }: Props) {
   return <button onClick={() => addToCart(productId)}>Add</button>;
 }
 ```
+
+```
+
+### 2.4 Next.js 16 Middleware (MANDATORY)
+
+- **Rule**: Middleware file is now named `proxy.ts`, NOT `middleware.ts`.
+- **Reason**: To avoid conflicts or follow specific project conventions for Next.js 16.
 
 ---
 

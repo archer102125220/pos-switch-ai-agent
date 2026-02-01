@@ -2,6 +2,18 @@
 
 本文件描述 AI 助手（如 Claude、Gemini）在此專案中應遵循的開發規則與標準。
 
+## 0. AI 模型配置對照表
+
+下表列出了本專案中不同 AI 模型所使用的設定檔：
+
+| AI 模型 | 設定檔位置 | 說明 |
+|---------|-----------|------|
+| **Gemini** | `GEMINI.md` | Google Gemini 的主要專案指引 |
+| **Claude** | `CLAUDE.md` | Anthropic Claude 的主要專案指引 |
+| **Cursor** | `.cursor/rules/*.mdc` | Cursor IDE 的模組化規則 |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | GitHub Copilot 的專案指引 |
+| **Antigravity** | `.agent/rules/*.md` | Antigravity AI Agent 的設定 |
+
 ## 1. TypeScript 規範
 
 ### 1.1 型別安全 (強制)
@@ -152,6 +164,13 @@ export function AddToCartButton({ productId }: Props) {
   return <button onClick={() => addToCart(productId)}>加入購物車</button>;
 }
 ```
+
+```
+
+### 2.4 Next.js 16 Middleware (強制)
+
+- **規則**：Middleware 檔案名稱必須為 `proxy.ts`，**不是** `middleware.ts`。
+- **原因**：為了避免衝突或遵循 Next.js 16 的特定專案慣例。
 
 ---
 
